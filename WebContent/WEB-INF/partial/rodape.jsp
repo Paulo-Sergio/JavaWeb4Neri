@@ -9,7 +9,7 @@
 	<!-- /.container-fluid -->
 	
 	<footer>
-		<p>Desenv. por Paulo França (www.paulofrancaweb.com.br) - Usuário Logado: <tag:usuarioLogado/> - Data: </p>
+		<p>Desenv. por Paulo França (www.paulofrancaweb.com.br) - Usuário Logado: <tag:usuarioLogado/> - Data: <tag:datahoje/></p>
 	</footer>
 
 	<script

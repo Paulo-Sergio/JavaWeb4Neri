@@ -12,25 +12,12 @@ import javax.servlet.http.HttpSession;
 import br.com.sistemaweb.dao.UsuarioDAO;
 import br.com.sistemaweb.javabean.model.Usuario;
 
-@WebServlet("/ServletLogar")
-public class ServletLogar extends HttpServlet {
+@WebServlet("/ServletSair")
+public class ServletSair extends HttpServlet {
 
 	private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String usuarioNome = req.getParameter("usuario");
-		String senha = req.getParameter("senha");
-
-		UsuarioDAO usuDAO = new UsuarioDAO();
-		
-		Usuario usuario = usuDAO.getUsuario(usuarioNome, senha);
-		
-		if (usuario != null) {
-			HttpSession sessao = req.getSession();
-			sessao.setAttribute("sessaoUsuario", usuario);
-			req.getRequestDispatcher("/index.jsp").forward(req, resp);
-		} else {
-			req.setAttribute("mensagem", "Usuário/Senha Incorretos");
-			req.getRequestDispatcher("/login.jsp").forward(req, resp);
-		}
+		req.getSession().invalidate();
+		resp.sendRedirect("ServletLogar");
 	}
 
 	@Override

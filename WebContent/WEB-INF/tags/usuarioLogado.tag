@@ -3,7 +3,7 @@
 
 <c:choose>
 	<c:when test="${not empty sessaoUsuario}">
-		${sessaoUsuario}
+		${sessaoUsuario.getUsuario()}
 	</c:when>
 	<c:otherwise>
 		Usuario não logado
