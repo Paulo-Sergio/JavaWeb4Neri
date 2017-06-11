@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.sistemaweb.factory.ConnectionFactory;
 import br.com.sistemaweb.javabean.model.Usuario;
@@ -16,7 +18,7 @@ public class UsuarioDAO {
 		this.connection = new ConnectionFactory().getConnection();
 	}
 
-	public boolean verificaUsuario(Usuario usuario) {
+	public boolean verificaUsuario(Usuario usuario) throws SQLException {
 		String sql = "SELECT * FROM usuarios WHERE usuario = ? AND senha = ?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -31,13 +33,13 @@ public class UsuarioDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			// this.connection.close();
+			this.connection.close();
 		}
 
 		return false;
 	}
 
-	public Usuario getUsuario(String usuario, String senha) {
+	public Usuario getUsuario(String usuario, String senha) throws SQLException {
 		String sql = "SELECT * FROM usuarios WHERE usuario = ? AND senha = ?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -50,15 +52,39 @@ public class UsuarioDAO {
 				usu.setUsuario(rs.getString("usuario"));
 				usu.setSenha(rs.getString("senha"));
 				usu.setNivel(rs.getInt("nivel"));
-				usu.setNomecompleto(rs.getString("nomecompleto"));
+				usu.setNomeCompleto(rs.getString("nomecompleto"));
 				return usu;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			// this.connection.close();
+			this.connection.close();
 		}
 		return null;
+	}
+	
+	public List<Usuario> getListaUsuarios() throws SQLException{
+		String sql = "SELECT * FROM usuarios";
+		List<Usuario> lista = new ArrayList<Usuario>();
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Usuario usu = new Usuario();
+				usu.setUsuario(rs.getString("usuario"));
+				usu.setSenha(rs.getString("senha"));
+				usu.setNivel(rs.getInt("nivel"));
+				usu.setNomeCompleto(rs.getString("nomecompleto"));
+				lista.add(usu);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.connection.close();
+		}
+		return lista;
 	}
 }

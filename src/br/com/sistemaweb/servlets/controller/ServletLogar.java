@@ -1,6 +1,7 @@
 package br.com.sistemaweb.servlets.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,32 +16,31 @@ import br.com.sistemaweb.javabean.model.Usuario;
 @WebServlet("/ServletLogar")
 public class ServletLogar extends HttpServlet {
 
-	private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String usuarioNome = req.getParameter("usuario");
-		String senha = req.getParameter("senha");
-
-		UsuarioDAO usuDAO = new UsuarioDAO();
-		
-		Usuario usuario = usuDAO.getUsuario(usuarioNome, senha);
-		
-		if (usuario != null) {
-			HttpSession sessao = req.getSession();
-			sessao.setAttribute("sessaoUsuario", usuario);
-			req.getRequestDispatcher("/index.jsp").forward(req, resp);
-		} else {
-			req.setAttribute("mensagem", "Usuário/Senha Incorretos");
-			req.getRequestDispatcher("/login.jsp").forward(req, resp);
-		}
-	}
-
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		processRequest(req, resp);
+		req.getRequestDispatcher("/login.jsp").forward(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		processRequest(req, resp);
+		String usuarioNome = req.getParameter("usuario");
+		String senha = req.getParameter("senha");
+
+		UsuarioDAO usuDAO = new UsuarioDAO();
+
+		try {
+			Usuario usuario = usuDAO.getUsuario(usuarioNome, senha);
+			if (usuario != null) {
+				HttpSession sessao = req.getSession();
+				sessao.setAttribute("sessaoUsuario", usuario);
+				req.getRequestDispatcher("/index.jsp").forward(req, resp);
+			} else {
+				req.setAttribute("mensagem", "Usuário/Senha Incorretos");
+				req.getRequestDispatcher("/login.jsp").forward(req, resp);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

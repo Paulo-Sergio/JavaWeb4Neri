@@ -5,7 +5,7 @@ public class Usuario {
 	private String usuario;
 	private String senha;
 	private int nivel;
-	private String nomecompleto;
+	private String nomeCompleto;
 
 	public String getUsuario() {
 		return usuario;
@@ -31,11 +31,11 @@ public class Usuario {
 		this.nivel = nivel;
 	}
 
-	public String getNomecompleto() {
-		return nomecompleto;
+	public String getNomeCompleto() {
+		return nomeCompleto;
 	}
 
-	public void setNomecompleto(String nomecompleto) {
-		this.nomecompleto = nomecompleto;
+	public void setNomeCompleto(String nomecompleto) {
+		this.nomeCompleto = nomecompleto;
 	}
 }
