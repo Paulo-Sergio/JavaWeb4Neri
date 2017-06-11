@@ -50,7 +50,7 @@
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<li class="active"><a href="#">Bairro</a></li>
+					<li><a href="#">Bairro</a></li>
 					<li><a href="#">Endereço</a></li>
 					<li><a href="#">Cidade</a></li>
 				</ul>
@@ -59,7 +59,7 @@
 					<li><a href="#">Cliente</a></li>
 					<li><a href="#">Produtos</a></li>
 					<li><a href="#">Vendas</a></li>
-					<li><a href="ListaUsuarios">Usuários</a></li>
+					<li><a href="ListarUsuarios">Usuários</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
 					<li><a href="ServletSair">Sair</a></li>

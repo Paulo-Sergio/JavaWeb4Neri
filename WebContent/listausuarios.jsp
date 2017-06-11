@@ -4,7 +4,7 @@
 <c:set var="contador" value="${0}"/>
 
 <c:import url="WEB-INF/partial/cabecalho.jsp" />
-<%-- <tags:verificaSessao /> --%>
+<tags:verificaSessao />
 
 <h1 class="page-header">Lista de Usuários</h1>
 
@@ -36,5 +36,8 @@
 	</c:forEach>
 	<tr><td colspan="6">Listando ${contador} registros de usuários</td></tr>
 </table>
+
+<tags:statusUsuarioExcluido/>
+<tags:statusUsuarioAlterado/>
 
 <c:import url="WEB-INF/partial/rodape.jsp" />

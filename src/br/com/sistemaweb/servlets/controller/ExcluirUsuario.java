@@ -13,16 +13,21 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.sistemaweb.dao.UsuarioDAO;
 import br.com.sistemaweb.javabean.model.Usuario;
 
-@WebServlet("/ListaUsuarios")
-public class ListaUsuarios extends HttpServlet {
+@WebServlet("/ExcluirUsuario")
+public class ExcluirUsuario extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String usuario = req.getParameter("usuario");
+
+		Usuario usu = new Usuario();
+		usu.setUsuario(usuario);
 		UsuarioDAO usuDAO = new UsuarioDAO();
 		try {
-			List<Usuario> listaUsuarios = usuDAO.getListaUsuarios();
-			req.setAttribute("listaUsuarios", listaUsuarios);
-			req.getRequestDispatcher("listausuarios.jsp").forward(req, resp);
+			if (usuDAO.excluirUsuario(usu)) {
+				req.setAttribute("mensagemExclusao", "Usuário " + usuario + " excluido com sucesso!");
+				req.getRequestDispatcher("/ListaUsuarios").forward(req, resp);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

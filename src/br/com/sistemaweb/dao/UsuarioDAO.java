@@ -64,7 +64,31 @@ public class UsuarioDAO {
 		return null;
 	}
 	
-	public List<Usuario> getListaUsuarios() throws SQLException{
+	public Usuario getUsuario(String usuario) throws SQLException {
+		String sql = "SELECT * FROM usuarios WHERE usuario = ?";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, usuario);
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				Usuario usu = new Usuario();
+				usu.setUsuario(rs.getString("usuario"));
+				usu.setSenha(rs.getString("senha"));
+				usu.setNivel(rs.getInt("nivel"));
+				usu.setNomeCompleto(rs.getString("nomecompleto"));
+				return usu;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.connection.close();
+		}
+		return null;
+	}
+
+	public List<Usuario> getListaUsuarios() throws SQLException {
 		String sql = "SELECT * FROM usuarios";
 		List<Usuario> lista = new ArrayList<Usuario>();
 		try {
@@ -86,5 +110,40 @@ public class UsuarioDAO {
 			this.connection.close();
 		}
 		return lista;
+	}
+
+	public boolean excluirUsuario(Usuario usuario) throws SQLException {
+		String sql = "DELETE FROM usuarios WHERE usuario = ?";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, usuario.getUsuario());
+			stmt.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.connection.close();
+		}
+
+		return false;
+	}
+
+	public boolean alterarUsuario(Usuario usuario) throws SQLException {
+		String sql = "UPDATE usuarios SET senha=?, nivel=?, nomecompleto=? WHERE usuario = ?";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, usuario.getSenha());
+			stmt.setInt(2, usuario.getNivel());
+			stmt.setString(3, usuario.getNomeCompleto());
+			stmt.setString(4, usuario.getUsuario());
+			stmt.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.connection.close();
+		}
+
+		return false;
 	}
 }
