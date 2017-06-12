@@ -20,17 +20,24 @@ public class ListarUsuarios extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		processRequest(req, resp);
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		processRequest(req, resp);
 	}
 
 	private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		UsuarioDAO usuDAO = new UsuarioDAO();
+		String numPagina = req.getParameter("num-pagina");
+		if (numPagina == null) {
+			numPagina = "1";
+		}
+		
 		try {
-			List<Usuario> listaUsuarios = usuDAO.getListaUsuarios();
+			List<Usuario> listaUsuarios = new UsuarioDAO().getListaUsuariosPaginada(Integer.parseInt(numPagina));
+			int qtdTotalRegistros = new UsuarioDAO().totalDeRegistros();
+
 			req.setAttribute("listaUsuarios", listaUsuarios);
+			req.setAttribute("qtdTotalRegistros", qtdTotalRegistros);
 			req.getRequestDispatcher("/listausuarios.jsp").forward(req, resp);
 		} catch (SQLException e) {
 			e.printStackTrace();

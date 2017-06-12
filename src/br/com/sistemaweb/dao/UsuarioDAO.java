@@ -112,6 +112,50 @@ public class UsuarioDAO {
 		return lista;
 	}
 
+	public int totalDeRegistros() throws SQLException {
+		String sql = "SELECT count(*) AS contaRegistros FROM usuarios";
+		int totalRegistros = 0;
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				totalRegistros = rs.getInt("contaRegistros");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.connection.close();
+		}
+		return totalRegistros;
+	}
+
+	public List<Usuario> getListaUsuariosPaginada(int pagina) throws SQLException {
+		int limit = 10;
+		int offset = (limit * pagina) - limit;
+		String sql = "SELECT * FROM usuarios LIMIT 10 OFFSET " + offset;
+		List<Usuario> lista = new ArrayList<Usuario>();
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Usuario usu = new Usuario();
+				usu.setUsuario(rs.getString("usuario"));
+				usu.setSenha(rs.getString("senha"));
+				usu.setNivel(rs.getInt("nivel"));
+				usu.setNomeCompleto(rs.getString("nomecompleto"));
+				lista.add(usu);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			 this.connection.close();
+		}
+		return lista;
+	}
+
 	public boolean excluirUsuario(Usuario usuario) throws SQLException {
 		String sql = "DELETE FROM usuarios WHERE usuario = ?";
 		try {

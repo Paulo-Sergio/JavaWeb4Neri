@@ -26,7 +26,7 @@ public class ExcluirUsuario extends HttpServlet {
 		try {
 			if (usuDAO.excluirUsuario(usu)) {
 				req.setAttribute("mensagemExclusao", "Usuário " + usuario + " excluido com sucesso!");
-				req.getRequestDispatcher("/ListaUsuarios").forward(req, resp);
+				req.getRequestDispatcher("/ListarUsuarios").forward(req, resp);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
