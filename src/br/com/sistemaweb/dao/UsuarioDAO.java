@@ -63,7 +63,7 @@ public class UsuarioDAO {
 		}
 		return null;
 	}
-	
+
 	public Usuario getUsuario(String usuario) throws SQLException {
 		String sql = "SELECT * FROM usuarios WHERE usuario = ?";
 		try {
@@ -136,6 +136,25 @@ public class UsuarioDAO {
 			stmt.setInt(2, usuario.getNivel());
 			stmt.setString(3, usuario.getNomeCompleto());
 			stmt.setString(4, usuario.getUsuario());
+			stmt.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.connection.close();
+		}
+
+		return false;
+	}
+
+	public boolean novoUsuario(Usuario usuario) throws SQLException {
+		String sql = "INSERT INTO usuarios (usuario, senha, nivel, nomecompleto) VALUES (?,?,?,?)";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, usuario.getUsuario());
+			stmt.setString(2, usuario.getSenha());
+			stmt.setInt(3, usuario.getNivel());
+			stmt.setString(4, usuario.getNomeCompleto());
 			stmt.execute();
 			return true;
 		} catch (SQLException e) {

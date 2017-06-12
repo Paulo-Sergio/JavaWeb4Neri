@@ -8,6 +8,9 @@
 
 <h1 class="page-header">Lista de Usuários</h1>
 
+<a href="NovoUsuario" class="btn btn-primary">Cadastrar Novo Usuário</a>
+<br><br>
+
 <table class="table table-bordered table-striped">
 	<tr>
 		<th>Usuário</th>
@@ -39,5 +42,6 @@
 
 <tags:statusUsuarioExcluido/>
 <tags:statusUsuarioAlterado/>
+<tags:statusUsuarioInclusao/>
 
 <c:import url="WEB-INF/partial/rodape.jsp" />
