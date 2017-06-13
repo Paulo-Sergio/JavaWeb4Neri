@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import br.com.sistemaweb.dao.UsuarioDAO;
 import br.com.sistemaweb.javabean.model.Usuario;
 
-@WebServlet("/ServletLogar")
+@WebServlet("/LogarServlet")
 public class LogarServlet extends HttpServlet {
 
 	@Override

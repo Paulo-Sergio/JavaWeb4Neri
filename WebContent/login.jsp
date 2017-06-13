@@ -20,7 +20,7 @@
 					</div>
 					
 					<div class="panel-body">
-						<form action="ServletLogar" method="POST">
+						<form action="LogarServlet" method="POST">
 							<fieldset>
 								<div class="form-group">
 									<input type="text" name="usuario" required placeholder="Usuário" class="form-control">

@@ -58,7 +58,9 @@ public class UsuarioServlet extends HttpServlet {
 		} else if (acao.equals("excluir")) {
 			if (usuDAO.excluirUsuario(usu)) {
 				request.setAttribute("mensagemExclusao", "Usuário " + usuario + " excluido com sucesso!");
-				dispatcher = request.getRequestDispatcher("/UsuarioServlet?acao=listar");
+				// dispatcher =
+				// request.getRequestDispatcher("/UsuarioServlet?acao=listar");
+				response.sendRedirect("UsuarioServlet");
 			}
 
 		} else if (acao.equals("alterar")) {
@@ -66,27 +68,32 @@ public class UsuarioServlet extends HttpServlet {
 				Usuario usuParaAlterar = new UsuarioDAO().getUsuario(usuario);
 				request.setAttribute("usuario", usuParaAlterar);
 				dispatcher = request.getRequestDispatcher("salvarusuario.jsp");
-				
-			} else if(request.getMethod().equals("POST")){
+
+			} else if (request.getMethod().equals("POST")) {
 				if (usuDAO.alterarUsuario(usu)) {
 					request.setAttribute("mensagemAlteracao", "Usuário alterado com sucesso");
-					dispatcher = request.getRequestDispatcher("/UsuarioServlet?acao=listar");
+					// dispatcher =
+					// request.getRequestDispatcher("/UsuarioServlet?acao=listar");
+					response.sendRedirect("UsuarioServlet");
 				}
 			}
 
 		} else if (acao.equals("novo")) {
 			if (request.getMethod().equals("GET")) {
 				dispatcher = request.getRequestDispatcher("salvarusuario.jsp");
-				
+
 			} else if (request.getMethod().equals("POST")) {
 				if (usuDAO.novoUsuario(usu)) {
 					request.setAttribute("mensagemInclusao", "Usuário " + usuario + " inserido com sucesso");
-					dispatcher = request.getRequestDispatcher("/UsuarioServlet?acao=listar");
+					// dispatcher =
+					// request.getRequestDispatcher("/UsuarioServlet?acao=listar");
+					response.sendRedirect("UsuarioServlet");
 				}
 			}
 		}
 
-		dispatcher.forward(request, response);
+		if (dispatcher != null)
+			dispatcher.forward(request, response);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -12,12 +12,12 @@ import javax.servlet.http.HttpSession;
 import br.com.sistemaweb.dao.UsuarioDAO;
 import br.com.sistemaweb.javabean.model.Usuario;
 
-@WebServlet("/ServletSair")
+@WebServlet("/SairServlet")
 public class SairServlet extends HttpServlet {
 
 	private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getSession().invalidate();
-		resp.sendRedirect("ServletLogar");
+		resp.sendRedirect("LogarServlet");
 	}
 
 	@Override

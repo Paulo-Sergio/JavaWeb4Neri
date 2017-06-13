@@ -64,7 +64,7 @@
 					<li><a href="UsuarioServlet">Usuários</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li><a href="ServletSair">Sair</a></li>
+					<li><a href="SairServlet">Sair</a></li>
 				</ul>
 			</div>
 			
