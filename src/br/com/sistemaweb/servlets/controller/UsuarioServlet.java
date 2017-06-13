@@ -45,11 +45,12 @@ public class UsuarioServlet extends HttpServlet {
 			acao = "listar";
 
 		if (acao.equals("listar")) {
-			String numPagina = request.getParameter("num-pagina");
-			if (numPagina == null) {
-				numPagina = "1";
-			}
-			List<Usuario> listaUsuarios = new UsuarioDAO().getListaUsuariosPaginada(Integer.parseInt(numPagina));
+			String pOrdenacao = request.getParameter("ordenacao");
+			String pNumPagina = request.getParameter("num-pagina");
+			String numPagina = pNumPagina == null ? "1" : pNumPagina;
+			String ordenacao = pOrdenacao == null ? "nomecompleto" : pOrdenacao;
+
+			List<Usuario> listaUsuarios = new UsuarioDAO().getListaUsuariosPaginada(Integer.parseInt(numPagina), ordenacao);
 			int qtdTotalRegistros = new UsuarioDAO().totalDeRegistros();
 			request.setAttribute("listaUsuarios", listaUsuarios);
 			request.setAttribute("qtdTotalRegistros", qtdTotalRegistros);

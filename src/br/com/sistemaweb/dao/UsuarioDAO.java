@@ -130,10 +130,10 @@ public class UsuarioDAO {
 		return totalRegistros;
 	}
 
-	public List<Usuario> getListaUsuariosPaginada(int pagina) throws SQLException {
+	public List<Usuario> getListaUsuariosPaginada(int pagina, String ordenacao) throws SQLException {
 		int limit = 10;
 		int offset = (limit * pagina) - limit;
-		String sql = "SELECT * FROM usuarios LIMIT 10 OFFSET " + offset;
+		String sql = "SELECT * FROM usuarios ORDER BY " + ordenacao + " LIMIT 10 OFFSET " + offset;
 		List<Usuario> lista = new ArrayList<Usuario>();
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -151,7 +151,7 @@ public class UsuarioDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			 this.connection.close();
+			this.connection.close();
 		}
 		return lista;
 	}
