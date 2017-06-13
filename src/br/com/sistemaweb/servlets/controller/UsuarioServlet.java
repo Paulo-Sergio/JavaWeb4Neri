@@ -58,30 +58,30 @@ public class UsuarioServlet extends HttpServlet {
 		} else if (acao.equals("excluir")) {
 			if (usuDAO.excluirUsuario(usu)) {
 				request.setAttribute("mensagemExclusao", "Usuário " + usuario + " excluido com sucesso!");
-				dispatcher = request.getRequestDispatcher("/ListarUsuarios");
+				dispatcher = request.getRequestDispatcher("/UsuarioServlet?acao=listar");
 			}
 
 		} else if (acao.equals("alterar")) {
 			if (request.getMethod().equals("GET")) {
 				Usuario usuParaAlterar = new UsuarioDAO().getUsuario(usuario);
 				request.setAttribute("usuario", usuParaAlterar);
-				dispatcher = request.getRequestDispatcher("alterarusuario.jsp");
+				dispatcher = request.getRequestDispatcher("salvarusuario.jsp");
 				
 			} else if(request.getMethod().equals("POST")){
 				if (usuDAO.alterarUsuario(usu)) {
 					request.setAttribute("mensagemAlteracao", "Usuário alterado com sucesso");
-					dispatcher = request.getRequestDispatcher("/ListarUsuarios");
+					dispatcher = request.getRequestDispatcher("/UsuarioServlet?acao=listar");
 				}
 			}
 
 		} else if (acao.equals("novo")) {
 			if (request.getMethod().equals("GET")) {
-				dispatcher = request.getRequestDispatcher("novousuario.jsp");
+				dispatcher = request.getRequestDispatcher("salvarusuario.jsp");
 				
 			} else if (request.getMethod().equals("POST")) {
 				if (usuDAO.novoUsuario(usu)) {
 					request.setAttribute("mensagemInclusao", "Usuário " + usuario + " inserido com sucesso");
-					dispatcher = request.getRequestDispatcher("/ListarUsuarios");
+					dispatcher = request.getRequestDispatcher("/UsuarioServlet?acao=listar");
 				}
 			}
 		}

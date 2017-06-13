@@ -13,7 +13,7 @@ import br.com.sistemaweb.dao.UsuarioDAO;
 import br.com.sistemaweb.javabean.model.Usuario;
 
 @WebServlet("/ServletSair")
-public class ServletSair extends HttpServlet {
+public class SairServlet extends HttpServlet {
 
 	private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getSession().invalidate();

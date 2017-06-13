@@ -14,7 +14,7 @@ import br.com.sistemaweb.dao.UsuarioDAO;
 import br.com.sistemaweb.javabean.model.Usuario;
 
 @WebServlet("/ServletLogar")
-public class ServletLogar extends HttpServlet {
+public class LogarServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
