@@ -25,7 +25,7 @@
 				}
 		%>
 		<li class="<%=active%>"><a
-			href="ListarUsuarios?num-pagina=<%=i%>"><%=i%></a></li>
+			href="UsuarioServlet?num-pagina=<%=i%>"><%=i%></a></li>
 		<%
 			}
 		%>

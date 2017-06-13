@@ -8,7 +8,7 @@
 
 <h1 class="page-header">Lista de Usuários</h1>
 
-<a href="NovoUsuario" class="btn btn-primary">Cadastrar Novo Usuário</a>
+<a href="UsuarioServlet?acao=novo" class="btn btn-primary">Cadastrar Novo Usuário</a>
 <br>
 <br>
 
@@ -29,12 +29,16 @@
 			<td>${usuario.getUsuario()}</td>
 			<td>${usuario.getNivel()}</td>
 			<td>${usuario.getNomeCompleto()}</td>
-			<td><a href="AlterarUsuario?usuario=${usuario.getUsuario()}">
+			<td>
+				<a href="UsuarioServlet?acao=alterar&usuario=${usuario.getUsuario()}">
 					<img src="resources/imagens/edit.png" alt="editar" />
-			</a></td>
-			<td><a href="ExcluirUsuario?usuario=${usuario.getUsuario()}">
+				</a>
+			</td>
+			<td>
+				<a href="UsuarioServlet?acao=excluir&usuario=${usuario.getUsuario()}">
 					<img src="resources/imagens/delete.png" alt="excluir" />
-			</a></td>
+				</a>
+			</td>
 		</tr>
 		<c:set var="contador" value="${contador+1}" />
 	</c:forEach>

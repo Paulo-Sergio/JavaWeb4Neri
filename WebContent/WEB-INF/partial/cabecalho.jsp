@@ -61,7 +61,7 @@
 					<li><a href="#">Cliente</a></li>
 					<li><a href="#">Produtos</a></li>
 					<li><a href="#">Vendas</a></li>
-					<li><a href="ListarUsuarios">Usuários</a></li>
+					<li><a href="UsuarioServlet">Usuários</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
 					<li><a href="ServletSair">Sair</a></li>

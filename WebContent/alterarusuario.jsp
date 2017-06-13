@@ -8,7 +8,7 @@
 
 <h1 class="page-header">Alteração de Usuário</h1>
 
-<form method="POST" action="AlterarUsuario">
+<form method="POST" action="UsuarioServlet?acao=alterar">
 	<div class="form-group">
 		<label for="usuario">Usuario</label> <input type="text" name="usuario" class="form-control" value="${usuario.getUsuario()}"
 			readonly>

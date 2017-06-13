@@ -6,7 +6,7 @@
 
 <h1 class="page-header">Cadastro de Novo Usuário</h1>
 
-<form method="POST" action="NovoUsuario">
+<form method="POST" action="UsuarioServlet?acao=novo">
 	<div class="form-group">
 		<label for="usuario">Usuario</label> <input type="text" id="usuario" name="usuario" class="form-control"
 			placeholder="Informar nome para usuário" maxlength="10">
