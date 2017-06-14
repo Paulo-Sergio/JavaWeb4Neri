@@ -46,12 +46,18 @@ public class UsuarioServlet extends HttpServlet {
 
 		if (acao.equals("listar")) {
 			String pOrdenacao = request.getParameter("ordenacao");
-			String pNumPagina = request.getParameter("num-pagina");
-			String numPagina = pNumPagina == null ? "1" : pNumPagina;
+			String pNumPagina = request.getParameter("numpagina");
+			String pPesquisa = request.getParameter("pesquisa");
+			String pCampoPesquisa = request.getParameter("campopesquisa");
+			
+			String numPagina = pNumPagina == null || pNumPagina == "" ? "1" : pNumPagina;
 			String ordenacao = pOrdenacao == null ? "nomecompleto" : pOrdenacao;
+			String pesquisa = pPesquisa == null ? "" : pPesquisa;
+			String campoPesquisa = pCampoPesquisa == null ? "nomecompleto" : pCampoPesquisa;
 
-			List<Usuario> listaUsuarios = new UsuarioDAO().getListaUsuariosPaginada(Integer.parseInt(numPagina), ordenacao);
-			int qtdTotalRegistros = new UsuarioDAO().totalDeRegistros();
+			List<Usuario> listaUsuarios = new UsuarioDAO().getListaUsuariosPaginada(Integer.parseInt(numPagina), ordenacao,
+					pesquisa, campoPesquisa);
+			int qtdTotalRegistros = new UsuarioDAO().totalDeRegistros(pesquisa, campoPesquisa);
 			request.setAttribute("listaUsuarios", listaUsuarios);
 			request.setAttribute("qtdTotalRegistros", qtdTotalRegistros);
 			dispatcher = request.getRequestDispatcher("/listausuarios.jsp");
@@ -59,8 +65,6 @@ public class UsuarioServlet extends HttpServlet {
 		} else if (acao.equals("excluir")) {
 			if (usuDAO.excluirUsuario(usu)) {
 				request.setAttribute("mensagemExclusao", "Usuário " + usuario + " excluido com sucesso!");
-				// dispatcher =
-				// request.getRequestDispatcher("/UsuarioServlet?acao=listar");
 				response.sendRedirect("UsuarioServlet");
 			}
 
@@ -73,8 +77,6 @@ public class UsuarioServlet extends HttpServlet {
 			} else if (request.getMethod().equals("POST")) {
 				if (usuDAO.alterarUsuario(usu)) {
 					request.setAttribute("mensagemAlteracao", "Usuário alterado com sucesso");
-					// dispatcher =
-					// request.getRequestDispatcher("/UsuarioServlet?acao=listar");
 					response.sendRedirect("UsuarioServlet");
 				}
 			}
@@ -86,8 +88,6 @@ public class UsuarioServlet extends HttpServlet {
 			} else if (request.getMethod().equals("POST")) {
 				if (usuDAO.novoUsuario(usu)) {
 					request.setAttribute("mensagemInclusao", "Usuário " + usuario + " inserido com sucesso");
-					// dispatcher =
-					// request.getRequestDispatcher("/UsuarioServlet?acao=listar");
 					response.sendRedirect("UsuarioServlet");
 				}
 			}

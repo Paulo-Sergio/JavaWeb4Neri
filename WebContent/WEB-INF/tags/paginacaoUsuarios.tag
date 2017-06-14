@@ -12,11 +12,14 @@
 	}
 
 	// qual a pagina ativa
-	String numPagina = request.getParameter("num-pagina") == null ? "1" : request.getParameter("num-pagina");
+	String numPagina = request.getParameter("numpagina") == null ? "1" : request.getParameter("numpagina");
 	int paginaAtiva = Integer.parseInt(numPagina);
 	
 	// qual a ordenacao
 	String ordenacao = request.getParameter("ordenacao") == null ? "nomecompleto" : request.getParameter("ordenacao");
+	
+	// qual a pesquisa que foi feita
+	String pesquisa = request.getParameter("pesquisa") == null ? "" : request.getParameter("pesquisa");
 %>
 <div class="page-nation">
 	<ul class="pagination pagination-large">
@@ -28,9 +31,7 @@
 				}
 		%>
 		<li class="<%=active%>"><a
-			href="UsuarioServlet?ordenacao=<%=ordenacao%>&num-pagina=<%=i%>"><%=i%></a></li>
-		<%
-			}
-		%>
+			href="UsuarioServlet?ordenacao=<%=ordenacao%>&pesquisa=<%=pesquisa%>&numpagina=<%=i%>"><%=i%></a></li>
+		<% } %>
 	</ul>
 </div>

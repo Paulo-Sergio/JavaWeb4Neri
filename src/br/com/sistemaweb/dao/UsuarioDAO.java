@@ -112,8 +112,8 @@ public class UsuarioDAO {
 		return lista;
 	}
 
-	public int totalDeRegistros() throws SQLException {
-		String sql = "SELECT count(*) AS contaRegistros FROM usuarios";
+	public int totalDeRegistros(String pesquisa, String campoPesquisa) throws SQLException {
+		String sql = "SELECT count(*) AS contaRegistros FROM usuarios WHERE " + campoPesquisa + " LIKE '%" + pesquisa + "%'";
 		int totalRegistros = 0;
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -130,10 +130,12 @@ public class UsuarioDAO {
 		return totalRegistros;
 	}
 
-	public List<Usuario> getListaUsuariosPaginada(int pagina, String ordenacao) throws SQLException {
+	public List<Usuario> getListaUsuariosPaginada(int pagina, String ordenacao, String pesquisa, String campoPesquisa)
+			throws SQLException {
 		int limit = 10;
 		int offset = (limit * pagina) - limit;
-		String sql = "SELECT * FROM usuarios ORDER BY " + ordenacao + " LIMIT 10 OFFSET " + offset;
+		String sql = "SELECT * FROM usuarios WHERE " + campoPesquisa + " LIKE '%" + pesquisa + "%' ORDER BY " + ordenacao
+				+ " LIMIT 10 OFFSET " + offset;
 		List<Usuario> lista = new ArrayList<Usuario>();
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
