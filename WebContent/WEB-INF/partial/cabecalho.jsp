@@ -52,7 +52,7 @@
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<li><a href="#">Bairro</a></li>
+					<li><a href="BairroServlet">Bairro</a></li>
 					<li><a href="#">Endereço</a></li>
 					<li><a href="#">Cidade</a></li>
 				</ul>

@@ -53,7 +53,7 @@ public class UsuarioServlet extends HttpServlet {
 			String numPagina = pNumPagina == null || pNumPagina == "" ? "1" : pNumPagina;
 			String ordenacao = pOrdenacao == null ? "nomecompleto" : pOrdenacao;
 			String pesquisa = pPesquisa == null ? "" : pPesquisa;
-			String campoPesquisa = pCampoPesquisa == null ? "nomecompleto" : pCampoPesquisa;
+			String campoPesquisa = pCampoPesquisa == null || pCampoPesquisa == "" ? "nomecompleto" : pCampoPesquisa;
 
 			List<Usuario> listaUsuarios = new UsuarioDAO().getListaUsuariosPaginada(Integer.parseInt(numPagina), ordenacao,
 					pesquisa, campoPesquisa);

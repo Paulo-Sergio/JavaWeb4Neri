@@ -23,11 +23,12 @@ public class BairroServlet extends HttpServlet {
 
 	public void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
-		int id = Integer.parseInt(request.getParameter("id"));
+		String id = request.getParameter("id");
 		String descricao = request.getParameter("descricao");
 
 		Bairro bairro = new Bairro();
-		bairro.setId(id);
+		if (id != null)
+			bairro.setId(Integer.parseInt(id));
 		bairro.setDescricao(descricao);
 
 		BairroDAO bairroDAO = new BairroDAO();
@@ -44,14 +45,14 @@ public class BairroServlet extends HttpServlet {
 			String pNumPagina = request.getParameter("numpagina");
 			String pPesquisa = request.getParameter("pesquisa");
 			String pCampoPesquisa = request.getParameter("campopesquisa");
-			
+
 			String numPagina = pNumPagina == null || pNumPagina == "" ? "1" : pNumPagina;
 			String ordenacao = pOrdenacao == null ? "descricao" : pOrdenacao;
 			String pesquisa = pPesquisa == null ? "" : pPesquisa;
-			String campoPesquisa = pCampoPesquisa == null ? "descricao" : pCampoPesquisa;
+			String campoPesquisa = pCampoPesquisa == null || pCampoPesquisa == "" ? "descricao" : pCampoPesquisa;
 
-			List<Bairro> listaBairros = new BairroDAO().getListaBairrosPaginada(Integer.parseInt(numPagina), ordenacao,
-					pesquisa, campoPesquisa);
+			List<Bairro> listaBairros = new BairroDAO().getListaBairrosPaginada(Integer.parseInt(numPagina), ordenacao, pesquisa,
+					campoPesquisa);
 			int qtdTotalRegistros = new BairroDAO().totalDeRegistros(pesquisa, campoPesquisa);
 			request.setAttribute("listaBairros", listaBairros);
 			request.setAttribute("qtdTotalRegistros", qtdTotalRegistros);
@@ -59,19 +60,19 @@ public class BairroServlet extends HttpServlet {
 
 		} else if (acao.equals("excluir")) {
 			if (bairroDAO.excluirBairro(bairro)) {
-				request.setAttribute("mensagemExclusao", "Usuário " + id + " excluido com sucesso!");
+				request.setAttribute("mensagemExclusao", "Bairro " + id + " excluido com sucesso!");
 				response.sendRedirect("BairroServlet");
 			}
 
 		} else if (acao.equals("alterar")) {
 			if (request.getMethod().equals("GET")) {
-				Bairro bairroParaAlterar = new BairroDAO().getBairro(id);
+				Bairro bairroParaAlterar = new BairroDAO().getBairro(Integer.parseInt(id));
 				request.setAttribute("bairro", bairroParaAlterar);
 				dispatcher = request.getRequestDispatcher("salvarbairro.jsp");
 
 			} else if (request.getMethod().equals("POST")) {
 				if (bairroDAO.alterarBairro(bairro)) {
-					request.setAttribute("mensagemAlteracao", "Usuário alterado com sucesso");
+					request.setAttribute("mensagemAlteracao", "Bairro alterado com sucesso");
 					response.sendRedirect("BairroServlet");
 				}
 			}

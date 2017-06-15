@@ -20,7 +20,7 @@
 
 	<div class="col-md-9 text-right">
 		<form method="get" action="UsuarioServlet" class="form-inline">
-			<input type="hidden" name="numpagina" value="${param.numpagina == null ? '1' : param.numpagina}">
+			<input type="hidden" name="numpagina" value="1">
 			<div class="form-group">
 				<select class="form-control" name="campopesquisa">
 					<option value="nomecompleto" ${selecionar == 'nomecompleto' ? 'selected="selected"' : ''}>Nome Completo</option>
