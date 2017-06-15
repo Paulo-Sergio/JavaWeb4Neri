@@ -61,8 +61,30 @@ public class BairroDAO {
 		}
 		return lista;
 	}
+	
+	public Bairro getBairro(int id) throws SQLException {
+		String sql = "SELECT * FROM bairro WHERE id = ?";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setInt(1, id);
 
-	public boolean excluirUsuario(Bairro bairro) throws SQLException {
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				Bairro bairro = new Bairro();
+				bairro.setId(rs.getInt("id"));
+				bairro.setDescricao(rs.getString("descricao"));
+				return bairro;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.connection.close();
+		}
+		return null;
+	}
+
+	public boolean excluirBairro(Bairro bairro) throws SQLException {
 		String sql = "DELETE FROM bairro WHERE id = ?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -78,7 +100,7 @@ public class BairroDAO {
 		return false;
 	}
 
-	public boolean alterarUsuario(Bairro bairro) throws SQLException {
+	public boolean alterarBairro(Bairro bairro) throws SQLException {
 		String sql = "UPDATE bairro SET descricao=? WHERE id = ?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -95,7 +117,7 @@ public class BairroDAO {
 		return false;
 	}
 
-	public boolean novoUsuario(Bairro bairro) throws SQLException {
+	public boolean novoBairro(Bairro bairro) throws SQLException {
 		String sql = "INSERT INTO bairro (descricao) VALUES (?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
