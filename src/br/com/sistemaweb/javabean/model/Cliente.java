@@ -1,6 +1,6 @@
 package br.com.sistemaweb.javabean.model;
 
-import java.util.Calendar;
+import java.sql.Date;
 
 public class Cliente {
 
@@ -14,8 +14,8 @@ public class Cliente {
 	private String cep;
 	private String rg;
 	private String cpf;
-	private Calendar datanascimento;
-	private Calendar datacadastro;
+	private Date datanascimento;
+	private Date datacadastro;
 	private String fonecel;
 	private String fone2;
 	private String email;
@@ -83,16 +83,16 @@ public class Cliente {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	public Calendar getDatanascimento() {
+	public Date getDatanascimento() {
 		return datanascimento;
 	}
-	public void setDatanascimento(Calendar datanascimento) {
+	public void setDatanascimento(Date datanascimento) {
 		this.datanascimento = datanascimento;
 	}
-	public Calendar getDatacadastro() {
+	public Date getDatacadastro() {
 		return datacadastro;
 	}
-	public void setDatacadastro(Calendar datacadastro) {
+	public void setDatacadastro(Date datacadastro) {
 		this.datacadastro = datacadastro;
 	}
 	public String getFonecel() {
