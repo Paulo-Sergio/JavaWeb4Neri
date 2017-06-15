@@ -20,6 +20,9 @@
 	
 	// qual a pesquisa que foi feita
 	String pesquisa = request.getParameter("pesquisa") == null ? "" : request.getParameter("pesquisa");
+	
+	// qual campo de pesquisa
+	String campoPesquisa = request.getParameter("campopesquisa") == null ? "nomecompleto" : request.getParameter("campopesquisa");
 %>
 <div class="page-nation">
 	<ul class="pagination pagination-large">
@@ -31,7 +34,7 @@
 				}
 		%>
 		<li class="<%=active%>"><a
-			href="UsuarioServlet?ordenacao=<%=ordenacao%>&pesquisa=<%=pesquisa%>&numpagina=<%=i%>"><%=i%></a></li>
+			href="UsuarioServlet?ordenacao=<%=ordenacao%>&pesquisa=<%=pesquisa%>&campopesquisa=<%=campoPesquisa%>&numpagina=<%=i%>"><%=i%></a></li>
 		<% } %>
 	</ul>
 </div>

@@ -30,7 +30,7 @@
 					placeholder="Nome completo">
 			</div>
 			<div class="form-group">
-				<a href="ListarUsuarios" class="btn btn-default">Voltar</a>
+				<a href="UsuarioServlet" class="btn btn-default">Voltar</a>
 				<button type="submit" class="btn btn-primary">Salvar Alteração</button>
 			</div>
 		</form>
@@ -61,7 +61,7 @@
 					value="${usuario.getNomeCompleto()}">
 			</div>
 			<div class="form-group">
-				<a href="ListarUsuarios" class="btn btn-default">Voltar</a>
+				<a href="UsuarioServlet" class="btn btn-default">Voltar</a>
 				<button type="submit" class="btn btn-primary">Salvar Alteração</button>
 			</div>
 		</form>

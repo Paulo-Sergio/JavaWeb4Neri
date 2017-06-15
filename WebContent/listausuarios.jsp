@@ -2,14 +2,15 @@
 <%@taglib tagdir="/WEB-INF/tags" prefix="tags"%>
 
 <c:set var="contador" value="${0}" />
+<c:set var="selecionar" value="${param.campopesquisa}"/>
 
 <c:import url="WEB-INF/partial/cabecalho.jsp" />
 <tags:verificaSessao />
 
 <div class="row">
-<div class="col-md-12">
-	<h1 class="page-header">Lista de Usuários</h1>
-</div>
+	<div class="col-md-12">
+		<h1 class="page-header">Lista de Usuários</h1>
+	</div>
 </div>
 
 <div class="row" style="margin-bottom: 25px">
@@ -22,9 +23,9 @@
 			<input type="hidden" name="numpagina" value="${param.numpagina == null ? '1' : param.numpagina}">
 			<div class="form-group">
 				<select class="form-control" name="campopesquisa">
-					<option value="nomecompleto">Nome Completo</option>
-					<option value="usuario">Usuário</option>
-					<option value="nivel">Nível</option>
+					<option value="nomecompleto" ${selecionar == 'nomecompleto' ? 'selected="selected"' : ''}>Nome Completo</option>
+					<option value="usuario" ${selecionar == 'usuario' ? 'selected="selected"' : ''}>Usuário</option>
+					<option value="nivel" ${selecionar == 'nivel' ? 'selected="selected"' : ''}>Nível</option>
 				</select>
 			</div>
 			<div class="form-group">
@@ -44,9 +45,9 @@
 <div class="row">
 	<table class="table table-bordered table-striped">
 		<tr>
-			<th><a href="UsuarioServlet?ordenacao=usuario&numpagina=${param.numpagina == null ? '1' : param.numpagina}&pesquisa=${param.pesquisa}">Usuário</a></th>
-			<th><a href="UsuarioServlet?ordenacao=nivel&numpagina=${param.numpagina == null ? '1' : param.numpagina}&pesquisa=${param.pesquisa}">Nivel de Acesso</a></th>
-			<th><a href="UsuarioServlet?ordenacao=nomecompleto&numpagina=${param.numpagina == null ? '1' : param.numpagina}&pesquisa=${param.pesquisa}">Nome Completo</a></th>
+			<th><a href="UsuarioServlet?ordenacao=usuario&numpagina=${param.numpagina == null ? '1' : param.numpagina}&pesquisa=${param.pesquisa}&campopesquisa=${param.campopesquisa}">Usuário</a></th>
+			<th><a href="UsuarioServlet?ordenacao=nivel&numpagina=${param.numpagina == null ? '1' : param.numpagina}&pesquisa=${param.pesquisa}&campopesquisa=${param.campopesquisa}">Nivel de Acesso</a></th>
+			<th><a href="UsuarioServlet?ordenacao=nomecompleto&numpagina=${param.numpagina == null ? '1' : param.numpagina}&pesquisa=${param.pesquisa}&campopesquisa=${param.campopesquisa}">Nome Completo</a></th>
 			<th width="32">Alterar</th>
 			<th width="32">Excluir</th>
 		</tr>
