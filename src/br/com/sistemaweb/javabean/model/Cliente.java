@@ -14,8 +14,8 @@ public class Cliente {
 	private String cep;
 	private String rg;
 	private String cpf;
-	private Date datanascimento;
-	private Date datacadastro;
+	private Date dataNascimento;
+	private Date dataCadastro;
 	private String fonecel;
 	private String fone2;
 	private String email;
@@ -83,17 +83,17 @@ public class Cliente {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	public Date getDatanascimento() {
-		return datanascimento;
+	public Date getDataNascimento() {
+		return dataNascimento;
 	}
-	public void setDatanascimento(Date datanascimento) {
-		this.datanascimento = datanascimento;
+	public void setDataNascimento(Date datanascimento) {
+		this.dataNascimento = datanascimento;
 	}
-	public Date getDatacadastro() {
-		return datacadastro;
+	public Date getDataCadastro() {
+		return dataCadastro;
 	}
-	public void setDatacadastro(Date datacadastro) {
-		this.datacadastro = datacadastro;
+	public void setDataCadastro(Date datacadastro) {
+		this.dataCadastro = datacadastro;
 	}
 	public String getFonecel() {
 		return fonecel;

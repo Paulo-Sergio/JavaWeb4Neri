@@ -28,17 +28,17 @@ public class ClienteServlet extends HttpServlet {
 	public void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException, ParseException {
 		String id = request.getParameter("id");
-		String idBairro = request.getParameter("idbairro");
-		String idLogradouro = request.getParameter("idlogradouro");
-		String idCidade = request.getParameter("idcidade");
+		String idBairro = request.getParameter("idBairro");
+		String idLogradouro = request.getParameter("idLogradouro");
+		String idCidade = request.getParameter("idCidade");
 		String nome = request.getParameter("nome");
 		String numero = request.getParameter("numero");
 		String complemento = request.getParameter("complemento");
 		String cep = request.getParameter("cep");
 		String rg = request.getParameter("rg");
 		String cpf = request.getParameter("cpf");
-		String dataNascimento = request.getParameter("datanascimento");
-		String dataCadastro = request.getParameter("datacadastro");
+		String dataNascimento = request.getParameter("dataNascimento");
+		String dataCadastro = request.getParameter("dataCadastro");
 		String fonecel = request.getParameter("fonecel");
 		String fone2 = request.getParameter("fone2");
 		String email = request.getParameter("email");
@@ -46,9 +46,7 @@ public class ClienteServlet extends HttpServlet {
 		String sexo = request.getParameter("sexo");
 		String obs = request.getParameter("obs");
 
-		DateFormat fomatoData = new SimpleDateFormat("dd/MM/yyyy");
-		Date dataNascimentoFomatada = fomatoData.parse(dataNascimento);
-		Date dataCadastroFomatada = fomatoData.parse(dataCadastro);
+		DateFormat fomatoData = new SimpleDateFormat("yyyy-MM-dd");
 
 		Cliente cliente = new Cliente();
 		if (id != null)
@@ -65,8 +63,14 @@ public class ClienteServlet extends HttpServlet {
 		cliente.setCep(cep);
 		cliente.setRg(rg);
 		cliente.setCpf(cpf);
-		cliente.setDatanascimento(dataNascimentoFomatada);
-		cliente.setDatacadastro(dataCadastroFomatada);
+		if (dataNascimento != null) {
+			Date dataNascimentoFomatada = fomatoData.parse(dataNascimento);
+			cliente.setDataNascimento(dataNascimentoFomatada);
+		}
+		if (dataCadastro != null) {
+			Date dataCadastroFomatada = fomatoData.parse(dataCadastro);
+			cliente.setDataCadastro(dataCadastroFomatada);
+		}
 		cliente.setFonecel(fonecel);
 		cliente.setFone2(fone2);
 		cliente.setEmail(email);
@@ -90,9 +94,9 @@ public class ClienteServlet extends HttpServlet {
 			String pCampoPesquisa = request.getParameter("campopesquisa");
 
 			String numPagina = pNumPagina == null || pNumPagina == "" ? "1" : pNumPagina;
-			String ordenacao = pOrdenacao == null ? "descricao" : pOrdenacao;
+			String ordenacao = pOrdenacao == null ? "nome" : pOrdenacao;
 			String pesquisa = pPesquisa == null ? "" : pPesquisa;
-			String campoPesquisa = pCampoPesquisa == null || pCampoPesquisa == "" ? "descricao" : pCampoPesquisa;
+			String campoPesquisa = pCampoPesquisa == null || pCampoPesquisa == "" ? "nome" : pCampoPesquisa;
 
 			List<Cliente> listaClientes = new ClienteDAO().getListaClientesPaginada(Integer.parseInt(numPagina), ordenacao,
 					pesquisa, campoPesquisa);
