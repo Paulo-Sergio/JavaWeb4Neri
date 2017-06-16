@@ -67,6 +67,52 @@ INSERT INTO `cidade` VALUES (1,'Recife','PE'),(2,'Jaboatão dos Guararapes','PE'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `cliente`
+--
+
+DROP TABLE IF EXISTS `cliente`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cliente` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_bairro` int(11) NOT NULL,
+  `id_logradouro` int(11) NOT NULL,
+  `id_cidade` int(11) NOT NULL,
+  `nome` varchar(45) NOT NULL,
+  `numero` varchar(10) DEFAULT NULL,
+  `complemento` varchar(10) DEFAULT NULL,
+  `cep` varchar(9) DEFAULT NULL,
+  `rg` varchar(20) DEFAULT NULL,
+  `cpf` varchar(14) DEFAULT NULL,
+  `datanascimento` date DEFAULT NULL,
+  `datacadastro` date DEFAULT NULL,
+  `fonecel` varchar(16) DEFAULT NULL,
+  `fone2` varchar(16) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `foto` varchar(40) DEFAULT NULL,
+  `sexo` char(1) DEFAULT NULL,
+  `obs` text,
+  PRIMARY KEY (`id`),
+  KEY `fk_cliente_logradouro_idx` (`id_logradouro`),
+  KEY `fk_cliente_bairro_idx` (`id_bairro`),
+  KEY `fk_cliente_cidade_idx` (`id_cidade`),
+  CONSTRAINT `fk_cliente_bairro` FOREIGN KEY (`id_bairro`) REFERENCES `bairro` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_cliente_cidade` FOREIGN KEY (`id_cidade`) REFERENCES `cidade` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_cliente_logradouro` FOREIGN KEY (`id_logradouro`) REFERENCES `logradouro` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cliente`
+--
+
+LOCK TABLES `cliente` WRITE;
+/*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
+INSERT INTO `cliente` VALUES (1,1,1,1,'Paulo Sergio','362','casa','51110-050','7588022','079.351.744-31','1991-12-17','2017-06-15','988824977',NULL,'paulodesignn@gmail.com','paulo.png','m',NULL),(3,6,1,2,'Izabelly Santos','618','apt 2804','51021-130','1234567','111.111.222-33','1992-11-25','2017-06-16','988680609','12345678','bellynha_18@hotmail.com','iza.png','f','obs... obs... obs... obs...'),(4,1,1,1,'teste 2','45','345','','542342','5235235','2000-06-13','2017-06-16','5234235','52323513','teste@teste.com','teste.png','m','ffasfgsdghshdf sfhshsgad'),(5,7,3,3,'outro','67547','casa A','513050465','56754','846754784','1991-06-04','2017-06-16','746754','754675463','abcdefg@gsdg','asfas.jpg','m','abc abc dafsgshsdr');
+/*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `logradouro`
 --
 
@@ -129,4 +175,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-15 16:29:22
+-- Dump completed on 2017-06-16 18:51:02
