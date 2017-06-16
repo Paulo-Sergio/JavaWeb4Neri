@@ -58,7 +58,7 @@
 				</ul>
 				<ul class="nav nav-sidebar">
 					<li><a href="#">Estoque</a></li>
-					<li><a href="#">Cliente</a></li>
+					<li><a href="ClienteServlet">Cliente</a></li>
 					<li><a href="#">Produtos</a></li>
 					<li><a href="#">Vendas</a></li>
 					<li><a href="UsuarioServlet">Usuários</a></li>

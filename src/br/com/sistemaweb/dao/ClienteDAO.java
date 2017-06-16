@@ -35,20 +35,21 @@ public class ClienteDAO {
 				cliente.setId(rs.getInt("id"));
 				cliente.setIdBairro(rs.getInt("id_bairro"));
 				cliente.setIdLogradouro(rs.getInt("id_logradouro"));
-				cliente.setNome("nome");
-				cliente.setNumero("numero");
-				cliente.setComplemento("complemento");
-				cliente.setCep("cep");
-				cliente.setRg("rg");
-				cliente.setCpf("cpf");
+				cliente.setIdCidade(rs.getInt("id_cidade"));
+				cliente.setNome(rs.getString("nome"));
+				cliente.setNumero(rs.getString("numero"));
+				cliente.setComplemento(rs.getString("complemento"));
+				cliente.setCep(rs.getString("cep"));
+				cliente.setRg(rs.getString("rg"));
+				cliente.setCpf(rs.getString("cpf"));
 				cliente.setDatanascimento(rs.getDate("datanascimento"));
 				cliente.setDatacadastro(rs.getDate("datacadastro"));
-				cliente.setFonecel("fonecel");
-				cliente.setFone2("fone2");
-				cliente.setEmail("email");
-				cliente.setFoto("foto");
-				cliente.setSexo("sexo");
-				cliente.setObs("obs");
+				cliente.setFonecel(rs.getString("fonecel"));
+				cliente.setFone2(rs.getString("fone2"));
+				cliente.setEmail(rs.getString("email"));
+				cliente.setFoto(rs.getString("foto"));
+				cliente.setSexo(rs.getString("sexo"));
+				cliente.setObs(rs.getString("obs"));
 
 				lista.add(cliente);
 			}
@@ -80,7 +81,7 @@ public class ClienteDAO {
 	}
 
 	public Cliente getCliente(int id) throws SQLException {
-		String sql = "SELECT * FROM bairro WHERE id = ?";
+		String sql = "SELECT * FROM cliente WHERE id = ?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, id);
@@ -91,20 +92,21 @@ public class ClienteDAO {
 				cliente.setId(rs.getInt("id"));
 				cliente.setIdBairro(rs.getInt("id_bairro"));
 				cliente.setIdLogradouro(rs.getInt("id_logradouro"));
-				cliente.setNome("nome");
-				cliente.setNumero("numero");
-				cliente.setComplemento("complemento");
-				cliente.setCep("cep");
-				cliente.setRg("rg");
-				cliente.setCpf("cpf");
+				cliente.setIdCidade(rs.getInt("id_cidade"));
+				cliente.setNome(rs.getString("nome"));
+				cliente.setNumero(rs.getString("numero"));
+				cliente.setComplemento(rs.getString("complemento"));
+				cliente.setCep(rs.getString("cep"));
+				cliente.setRg(rs.getString("rg"));
+				cliente.setCpf(rs.getString("cpf"));
 				cliente.setDatanascimento(rs.getDate("datanascimento"));
 				cliente.setDatacadastro(rs.getDate("datacadastro"));
-				cliente.setFonecel("fonecel");
-				cliente.setFone2("fone2");
-				cliente.setEmail("email");
-				cliente.setFoto("foto");
-				cliente.setSexo("sexo");
-				cliente.setObs("obs");
+				cliente.setFonecel(rs.getString("fonecel"));
+				cliente.setFone2(rs.getString("fone2"));
+				cliente.setEmail(rs.getString("email"));
+				cliente.setFoto(rs.getString("foto"));
+				cliente.setSexo(rs.getString("sexo"));
+				cliente.setObs(rs.getString("obs"));
 
 				return cliente;
 			}
@@ -133,7 +135,7 @@ public class ClienteDAO {
 		return false;
 	}
 
-	public boolean alterarBairro(Cliente cliente) throws SQLException {
+	public boolean alterarCliente(Cliente cliente) throws SQLException {
 		String sql = "UPDATE cliente SET id_bairro=?, id_logradouro=?, id_cidade=?, nome=?, numero=?, complemento=?, rg=?, cpf=?, datanascimento=?, datacadastro=?, fonecel=?, fone2=?, email=?, foto=?, sexo=?, obs=? WHERE id = ?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -165,7 +167,7 @@ public class ClienteDAO {
 		return false;
 	}
 
-	public boolean novoBairro(Cliente cliente) throws SQLException {
+	public boolean novoCliente(Cliente cliente) throws SQLException {
 		String sql = "INSERT INTO cliente (id_bairro, id_logradouro, id_cidade, nome, numero, complemento, rg, cpf, datanascimento, datacadastro, fonecel, fone2, email, foto, sexo, obs) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
