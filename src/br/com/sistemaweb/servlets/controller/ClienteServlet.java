@@ -46,7 +46,7 @@ public class ClienteServlet extends HttpServlet {
 		String sexo = request.getParameter("sexo");
 		String obs = request.getParameter("obs");
 
-		DateFormat fomatoData = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat fomatoData = new SimpleDateFormat("dd/MM/yyyy");
 
 		Cliente cliente = new Cliente();
 		if (id != null)
