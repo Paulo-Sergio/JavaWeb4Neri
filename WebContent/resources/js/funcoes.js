@@ -35,3 +35,8 @@ function Numero(e) {
 			return true;
 	}
 }
+
+function fileFoto() {
+	var pegarFileFoto = document.getElementById("foto").value;
+	alert(pegarFileFoto);
+}
