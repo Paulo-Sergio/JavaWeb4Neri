@@ -5,6 +5,8 @@
 function validarSenha(input) {
 	if (input.value !== document.getElementById("senha").value) {
 		input.setCustomValidity('As senhas não são iguais!');
+	} else {
+		input.setCustomValidity('');
 	}
 }
 
@@ -36,7 +38,7 @@ function Numero(e) {
 	}
 }
 
-function fileFoto() {
-	var pegarFileFoto = document.getElementById("foto").value;
-	alert(pegarFileFoto);
+function atualizarFoto() {
+	var fotoDigitada = document.getElementById("foto").value;
+	document.getElementById("mostraFoto").src = "resources/imagens/fotoclientes/"+fotoDigitada;
 }

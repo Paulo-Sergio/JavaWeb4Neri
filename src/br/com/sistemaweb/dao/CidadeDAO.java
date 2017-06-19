@@ -8,18 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.sistemaweb.factory.ConnectionFactory;
-import br.com.sistemaweb.javabean.model.Bairro;
+import br.com.sistemaweb.javabean.model.Cidade;
 
-public class BairroDAO {
+public class CidadeDAO {
 
 	private Connection connection;
-	
-	public BairroDAO() {
+
+	public CidadeDAO() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
-	
+
 	public int totalDeRegistros(String pesquisa, String campoPesquisa) throws SQLException {
-		String sql = "SELECT count(*) AS contaRegistros FROM bairro WHERE " + campoPesquisa + " LIKE '%" + pesquisa + "%'";
+		String sql = "SELECT count(*) AS contaRegistros FROM cidade WHERE " + campoPesquisa + " LIKE '%" + pesquisa + "%'";
 		int totalRegistros = 0;
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -36,22 +36,23 @@ public class BairroDAO {
 		return totalRegistros;
 	}
 
-	public List<Bairro> getListaBairrosPaginada(int pagina, String ordenacao, String pesquisa, String campoPesquisa)
+	public List<Cidade> getListaCidadesPaginada(int pagina, String ordenacao, String pesquisa, String campoPesquisa)
 			throws SQLException {
 		int limit = 10;
 		int offset = (limit * pagina) - limit;
-		String sql = "SELECT * FROM bairro WHERE " + campoPesquisa + " LIKE '%" + pesquisa + "%' ORDER BY " + ordenacao
+		String sql = "SELECT * FROM cidade WHERE " + campoPesquisa + " LIKE '%" + pesquisa + "%' ORDER BY " + ordenacao
 				+ " LIMIT 10 OFFSET " + offset;
-		List<Bairro> lista = new ArrayList<Bairro>();
+		List<Cidade> lista = new ArrayList<Cidade>();
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				Bairro bairro = new Bairro();
-				bairro.setId(rs.getInt("id"));
-				bairro.setDescricao(rs.getString("descricao"));
-				lista.add(bairro);
+				Cidade cidade = new Cidade();
+				cidade.setId(rs.getInt("id"));
+				cidade.setDescricao(rs.getString("descricao"));
+				cidade.setUf(rs.getString("uf"));
+				lista.add(cidade);
 			}
 
 		} catch (SQLException e) {
@@ -62,19 +63,20 @@ public class BairroDAO {
 		return lista;
 	}
 	
-	public List<Bairro> getListaBairrosCombo()
+	public List<Cidade> getListaCidadesCombo()
 			throws SQLException {
-		String sql = "SELECT * FROM bairro ORDER BY descricao";
-		List<Bairro> lista = new ArrayList<Bairro>();
+		String sql = "SELECT * FROM cidade ORDER BY descricao";
+		List<Cidade> lista = new ArrayList<Cidade>();
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				Bairro bairro = new Bairro();
-				bairro.setId(rs.getInt("id"));
-				bairro.setDescricao(rs.getString("descricao"));
-				lista.add(bairro);
+				Cidade cidade = new Cidade();
+				cidade.setId(rs.getInt("id"));
+				cidade.setDescricao(rs.getString("descricao"));
+				cidade.setUf(rs.getString("uf"));
+				lista.add(cidade);
 			}
 
 		} catch (SQLException e) {
@@ -84,19 +86,20 @@ public class BairroDAO {
 		}
 		return lista;
 	}
-	
-	public Bairro getBairro(int id) throws SQLException {
-		String sql = "SELECT * FROM bairro WHERE id = ?";
+
+	public Cidade getCidade(int id) throws SQLException {
+		String sql = "SELECT * FROM cidade WHERE id = ?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, id);
 
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
-				Bairro bairro = new Bairro();
-				bairro.setId(rs.getInt("id"));
-				bairro.setDescricao(rs.getString("descricao"));
-				return bairro;
+				Cidade cidade = new Cidade();
+				cidade.setId(rs.getInt("id"));
+				cidade.setDescricao(rs.getString("descricao"));
+				cidade.setUf(rs.getString("uf"));
+				return cidade;
 			}
 
 		} catch (SQLException e) {
@@ -107,11 +110,11 @@ public class BairroDAO {
 		return null;
 	}
 
-	public boolean excluirBairro(Bairro bairro) throws SQLException {
-		String sql = "DELETE FROM bairro WHERE id = ?";
+	public boolean excluirCidade(Cidade cidade) throws SQLException {
+		String sql = "DELETE FROM cidade WHERE id = ?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, bairro.getId());
+			stmt.setInt(1, cidade.getId());
 			stmt.execute();
 			return true;
 		} catch (SQLException e) {
@@ -123,12 +126,13 @@ public class BairroDAO {
 		return false;
 	}
 
-	public boolean alterarBairro(Bairro bairro) throws SQLException {
-		String sql = "UPDATE bairro SET descricao=? WHERE id = ?";
+	public boolean alterarCidade(Cidade cidade) throws SQLException {
+		String sql = "UPDATE cidade SET descricao=?, uf=? WHERE id = ?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setString(1, bairro.getDescricao());
-			stmt.setInt(2, bairro.getId());
+			stmt.setString(1, cidade.getDescricao());
+			stmt.setString(2, cidade.getUf());
+			stmt.setInt(3, cidade.getId());
 			stmt.execute();
 			return true;
 		} catch (SQLException e) {
@@ -140,11 +144,12 @@ public class BairroDAO {
 		return false;
 	}
 
-	public boolean novoBairro(Bairro bairro) throws SQLException {
-		String sql = "INSERT INTO bairro (descricao) VALUES (?)";
+	public boolean novoCidade(Cidade cidaed) throws SQLException {
+		String sql = "INSERT INTO cidade (descricao, uf) VALUES (?,?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setString(1, bairro.getDescricao());
+			stmt.setString(1, cidaed.getDescricao());
+			stmt.setString(1, cidaed.getUf());
 			stmt.execute();
 			return true;
 		} catch (SQLException e) {

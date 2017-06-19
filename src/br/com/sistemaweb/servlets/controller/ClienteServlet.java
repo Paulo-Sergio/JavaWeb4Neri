@@ -15,8 +15,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.com.sistemaweb.dao.BairroDAO;
+import br.com.sistemaweb.dao.CidadeDAO;
 import br.com.sistemaweb.dao.ClienteDAO;
+import br.com.sistemaweb.dao.LogradouroDAO;
+import br.com.sistemaweb.javabean.model.Bairro;
+import br.com.sistemaweb.javabean.model.Cidade;
 import br.com.sistemaweb.javabean.model.Cliente;
+import br.com.sistemaweb.javabean.model.Logradouro;
 
 /**
  * Servlet implementation class ClienteServlet
@@ -101,6 +107,7 @@ public class ClienteServlet extends HttpServlet {
 			List<Cliente> listaClientes = new ClienteDAO().getListaClientesPaginada(Integer.parseInt(numPagina), ordenacao,
 					pesquisa, campoPesquisa);
 			int qtdTotalRegistros = new ClienteDAO().totalDeRegistros(pesquisa, campoPesquisa);
+			
 			request.setAttribute("listaClientes", listaClientes);
 			request.setAttribute("qtdTotalRegistros", qtdTotalRegistros);
 			dispatcher = request.getRequestDispatcher("/listaclientes.jsp");
@@ -114,6 +121,7 @@ public class ClienteServlet extends HttpServlet {
 		} else if (acao.equals("alterar")) {
 			if (request.getMethod().equals("GET")) {
 				Cliente clienteParaAlterar = new ClienteDAO().getCliente(Integer.parseInt(id));
+				preencherCombosBox(request);
 				request.setAttribute("cliente", clienteParaAlterar);
 				dispatcher = request.getRequestDispatcher("salvarcliente.jsp");
 
@@ -126,8 +134,9 @@ public class ClienteServlet extends HttpServlet {
 
 		} else if (acao.equals("novo")) {
 			if (request.getMethod().equals("GET")) {
+				preencherCombosBox(request);
 				dispatcher = request.getRequestDispatcher("salvarcliente.jsp");
-
+				
 			} else if (request.getMethod().equals("POST")) {
 				if (clienteDAO.novoCliente(cliente)) {
 					request.setAttribute("mensagemInclusao", "Cliente " + nome + " inserido com sucesso");
@@ -138,6 +147,16 @@ public class ClienteServlet extends HttpServlet {
 
 		if (dispatcher != null)
 			dispatcher.forward(request, response);
+	}
+
+	private void preencherCombosBox(HttpServletRequest request) throws SQLException {
+		List<Logradouro> listaLogradourosCombo = new LogradouroDAO().getListaLogradourosCombo();
+		List<Bairro> listaBairrosCombo = new BairroDAO().getListaBairrosCombo();
+		List<Cidade> listaCidadesCombo = new CidadeDAO().getListaCidadesCombo();
+		
+		request.setAttribute("listaLogradourosCombo", listaLogradourosCombo);
+		request.setAttribute("listaBairrosCombo", listaBairrosCombo);
+		request.setAttribute("listaCidadesCombo", listaCidadesCombo);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

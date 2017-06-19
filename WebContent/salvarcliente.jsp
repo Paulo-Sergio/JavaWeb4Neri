@@ -28,24 +28,36 @@
 				<input type="text" name="nome" class="form-control" id="nome" value="${cliente.getNome()}">
 			</div>
 			<div class="form-group">
-				<label for="idBairro">Bairro</label> 
-				<input type="text" name="idBairro" class="form-control" id="idBairro" value="${cliente.getIdBairro()}">
+				<label for="bairro">Bairro</label>
+				<select name="idBairro" class="form-control" id="bairro">
+					<c:forEach var="bairro" items="${listaBairrosCombo}">
+						<option value="${bairro.getId()}" ${bairro.getId() == cliente.getIdBairro() ? 'selected="selected"' : ''}>${bairro.getDescricao()}</option>
+					</c:forEach>
+				</select>
 			</div>
 			<div class="form-group">
-				<label for="idLogradouro">Logradouro</label> 
-				<input type="text" name="idLogradouro" class="form-control" id="idLogradouro" value="${cliente.getIdLogradouro()}">
+				<label for="logradouro">Logradouro</label> 
+				<select name="idLogradouro" class="form-control" id="logradouro">
+					<c:forEach var="logradouro" items="${listaLogradourosCombo}">
+						<option value="${logradouro.getId()}" ${logradouro.getId() == cliente.getIdLogradouro() ? 'selected="selected"' : ''}>${logradouro.getDescricao()}</option>
+					</c:forEach>
+				</select>
 			</div>
 			<div class="form-group">
 				<label for="numero">Número</label> 
 				<input type="text" name="numero" class="form-control" id="numero" value="${cliente.getNumero()}">
 			</div>
 			<div class="form-group">
-				<label for="idCidade">Cidade</label> 
-				<input type="text" name="idCidade" class="form-control" id="idCidade" value="${cliente.getIdCidade()}">
-			</div>
-			<div class="form-group">
 				<label for="complemento">Complemento</label> 
 				<input type="text" name="complemento" class="form-control" id="complemento" placeholder="casa ou apto (nº)" value="${cliente.getComplemento()}">
+			</div>
+			<div class="form-group">
+				<label for="cidade">Cidade</label> 
+				<select name="idCidade" class="form-control" id="cidade">
+					<c:forEach var="cidade" items="${listaCidadesCombo}">
+						<option value="${cidade.getId()}" ${cidade.getId() == cliente.getIdCidade() ? 'selected="selected"' : ''}>${cidade.getDescricao()}</option>
+					</c:forEach>
+				</select>
 			</div>
 			<div class="form-group">
 				<label for="cep">CEP</label> 
@@ -97,8 +109,8 @@
 			</div>
 			<div class="form-group">
 				<label for="foto">Foto</label>
-				<input type="file" name="foto" class="form-control" id="foto" value="${cliente.getFoto()}">
-				<img src="resources/imagens/fotoclientes/koala.jpg" class="img-responsive img-thumbnail" alt="Foto" width="200">
+				<input type="text" name="foto" onkeyup="atualizarFoto()" class="form-control" id="foto" value="${cliente.getFoto()}">
+				<img class="img-responsive img-thumbnail" alt="Foto" id="mostraFoto" width="200">
 			</div>
 		</div>
 		
