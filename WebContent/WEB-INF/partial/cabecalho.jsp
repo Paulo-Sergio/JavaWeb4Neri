@@ -57,10 +57,10 @@
 					<li><a href="#">Cidade</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li><a href="#">Estoque</a></li>
-					<li><a href="ClienteServlet">Cliente</a></li>
+					<li><a href="#">Categorias</a></li>
 					<li><a href="#">Produtos</a></li>
-					<li><a href="#">Vendas</a></li>
+					<li><a href="ClienteServlet">Clientes</a></li>
+					<li><a href="VendaServlet">Vendas</a></li>
 					<li><a href="UsuarioServlet">Usuários</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
