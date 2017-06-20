@@ -10,6 +10,7 @@ import java.util.List;
 
 import br.com.sistemaweb.factory.ConnectionFactory;
 import br.com.sistemaweb.javabean.model.Cliente;
+import br.com.sistemaweb.javabean.model.Venda;
 
 public class ClienteDAO {
 
@@ -78,6 +79,46 @@ public class ClienteDAO {
 			this.connection.close();
 		}
 		return totalRegistros;
+	}
+	
+	public List<Cliente> getListaClientesCombo()
+			throws SQLException {
+		String sql = "SELECT * FROM cliente ORDER BY nome";
+		List<Cliente> lista = new ArrayList<Cliente>();
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Cliente cliente = new Cliente();
+				cliente.setId(rs.getInt("id"));
+				cliente.setIdBairro(rs.getInt("id_bairro"));
+				cliente.setIdLogradouro(rs.getInt("id_logradouro"));
+				cliente.setIdCidade(rs.getInt("id_cidade"));
+				cliente.setNome(rs.getString("nome"));
+				cliente.setNumero(rs.getString("numero"));
+				cliente.setComplemento(rs.getString("complemento"));
+				cliente.setCep(rs.getString("cep"));
+				cliente.setRg(rs.getString("rg"));
+				cliente.setCpf(rs.getString("cpf"));
+				cliente.setDataNascimento(rs.getDate("datanascimento"));
+				cliente.setDataCadastro(rs.getDate("datacadastro"));
+				cliente.setFonecel(rs.getString("fonecel"));
+				cliente.setFone2(rs.getString("fone2"));
+				cliente.setEmail(rs.getString("email"));
+				cliente.setFoto(rs.getString("foto"));
+				cliente.setSexo(rs.getString("sexo"));
+				cliente.setObs(rs.getString("obs"));
+				
+				lista.add(cliente);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.connection.close();
+		}
+		return lista;
 	}
 
 	public Cliente getCliente(int id) throws SQLException {
