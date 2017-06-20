@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.xml.internal.ws.developer.MemberSubmissionAddressing.Validation;
-
 import br.com.sistemaweb.factory.ConnectionFactory;
 import br.com.sistemaweb.javabean.model.Venda;
 

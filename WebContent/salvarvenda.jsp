@@ -6,22 +6,20 @@
 <%-- <tags:verificaSessao /> --%>
 
 <div class="row">
-	<div class="col-md-12">
-		<c:choose>
-			<c:when test="${param.acao eq 'novo'}">
-				<h1 class="page-header">Nova Venda</h1>
-			</c:when>
-			<c:otherwise>
-				<h1 class="page-header">Editar Venda</h1>
-			</c:otherwise>
-		</c:choose>
-	</div>
+	<c:choose>
+		<c:when test="${param.acao eq 'novo'}">
+			<h1 class="page-header">Nova Venda</h1>
+		</c:when>
+		<c:otherwise>
+			<h1 class="page-header">Editar Venda</h1>
+		</c:otherwise>
+	</c:choose>
 
 	<form method="POST" action="VendaServlet?acao=${param.acao}">
-
-		<c:if test="${param.acao eq 'alterar'}">
-			<input type="hidden" readonly="readonly" name="id" class="form-control" id="id" value="${venda.getId()}">
-		</c:if>
+		<div class="form-group">
+			<label for="id">Código</label>
+			<input type="text" readonly="readonly" name="id" class="form-control" id="id" value="${venda.getId()}">
+		</div>
 		<div class="form-group">
 			<label for="bairro">Cliente</label>
 			<select name="idCliente" class="form-control" id="bairro">
@@ -45,6 +43,33 @@
 		<div class="form-group">
 			<a href="VendaServlet" class="btn btn-default">Voltar</a>
 			<button type="submit" class="btn btn-primary">Gerar Venda e Inserir Intes na Nota</button>
+		</div>
+	</form>
+	
+	<h1 class="page-header" style="margin-top: 50px">Mercadorias da Venda</h1>
+	
+	<form method="POST" action="VendaServlet?acao=${param.acao}">
+		<c:if test="${param.acao eq 'alterar'}">
+			<input type="hidden" readonly="readonly" name="id" class="form-control" id="id" value="${idDaVenda}">
+		</c:if>
+		<div class="form-group">
+			<label for="bairro">Produto</label>
+			<select name="idCliente" class="form-control" id="bairro">
+				<c:if test="${param.acao eq 'novo'}">
+					<option value="">-- Selecionar Produto --</option>
+				</c:if>
+				<c:forEach var="produto" items="${listaProdutosCombo}">
+					<option value="${produto.getId()}">${produto.getDescricao()}</option>
+				</c:forEach>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="qtdEstoque">Quantidade</label> 
+			<input type="number" name="qtdEstoque" class="form-control" id="qtdEstoque">
+		</div>
+		<div class="form-group">
+			<a href="VendaServlet" class="btn btn-default">Voltar</a>
+			<button type="submit" class="btn btn-primary">Itens da Venda</button>
 		</div>
 	</form>
 </div>

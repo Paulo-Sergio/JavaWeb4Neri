@@ -16,8 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.sistemaweb.dao.ClienteDAO;
+import br.com.sistemaweb.dao.ProdutoDAO;
 import br.com.sistemaweb.dao.VendaDAO;
 import br.com.sistemaweb.javabean.model.Cliente;
+import br.com.sistemaweb.javabean.model.Produto;
 import br.com.sistemaweb.javabean.model.Venda;
 
 /**
@@ -99,9 +101,7 @@ public class VendaServlet extends HttpServlet {
 
 		} else if (acao.equals("novo")) {
 			if (request.getMethod().equals("GET")) {
-				List<Cliente> listaClientesCombo = new ClienteDAO().getListaClientesCombo();
-
-				request.setAttribute("listaClientesCombo", listaClientesCombo);
+				preencherComboBox(request);
 				dispatcher = request.getRequestDispatcher("salvarvenda.jsp");
 
 			} else if (request.getMethod().equals("POST")) {
@@ -114,6 +114,14 @@ public class VendaServlet extends HttpServlet {
 
 		if (dispatcher != null)
 			dispatcher.forward(request, response);
+	}
+
+	private void preencherComboBox(HttpServletRequest request) throws SQLException {
+		List<Cliente> listaClientesCombo = new ClienteDAO().getListaClientesCombo();
+		List<Produto> listaProdutosCombo = new ProdutoDAO().getListaProdutosCombo();
+
+		request.setAttribute("listaClientesCombo", listaClientesCombo);
+		request.setAttribute("listaProdutosCombo", listaProdutosCombo);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
