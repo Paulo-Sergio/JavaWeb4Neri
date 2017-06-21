@@ -37,7 +37,7 @@ public class VendaServlet extends HttpServlet {
 		String valorTotal = request.getParameter("valorTotal");
 
 		Venda venda = new Venda();
-		if (id != null)
+		if (id != null && id != "")
 			venda.setId(Integer.parseInt(id));
 		if (idCliente != null)
 			venda.setIdCliente((Integer.parseInt(idCliente)));
@@ -84,11 +84,10 @@ public class VendaServlet extends HttpServlet {
 			}
 
 		} else if (acao.equals("alterar")) {
+			preencherComboBox(request);
 			if (request.getMethod().equals("GET")) {
 				Venda vendaParaAlterar = new VendaDAO().getVenda(Integer.parseInt(id));
-				List<Cliente> listaClientesCombo = new ClienteDAO().getListaClientesCombo();
 
-				request.setAttribute("listaClientesCombo", listaClientesCombo);
 				request.setAttribute("venda", vendaParaAlterar);
 				dispatcher = request.getRequestDispatcher("salvarvenda.jsp");
 
@@ -100,14 +99,16 @@ public class VendaServlet extends HttpServlet {
 			}
 
 		} else if (acao.equals("novo")) {
+			preencherComboBox(request);
 			if (request.getMethod().equals("GET")) {
-				preencherComboBox(request);
 				dispatcher = request.getRequestDispatcher("salvarvenda.jsp");
 
 			} else if (request.getMethod().equals("POST")) {
-				if (vendaDAO.novoVenda(venda)) {
-					request.setAttribute("mensagemInclusao", "Venda " + id + " inserido com sucesso");
-					response.sendRedirect("VendaServlet");
+				Integer idVenda = vendaDAO.novoVenda(venda);
+				if (idVenda != null) {
+					venda.setId(idVenda);
+					request.setAttribute("venda", venda);
+					dispatcher = request.getRequestDispatcher("salvarvenda.jsp");
 				}
 			}
 		}

@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,11 +15,11 @@ import br.com.sistemaweb.javabean.model.Venda;
 public class VendaDAO {
 
 	private Connection connection;
-	
+
 	public VendaDAO() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
-	
+
 	public int totalDeRegistros(String pesquisa, String campoPesquisa) throws SQLException {
 		String sql = "SELECT count(*) AS contaRegistros FROM venda WHERE " + campoPesquisa + " LIKE '%" + pesquisa + "%'";
 		int totalRegistros = 0;
@@ -64,9 +65,8 @@ public class VendaDAO {
 		}
 		return lista;
 	}
-	
-	public List<Venda> getListaVendasCombo()
-			throws SQLException {
+
+	public List<Venda> getListaVendasCombo() throws SQLException {
 		String sql = "SELECT * FROM venda ORDER BY descricao";
 		List<Venda> lista = new ArrayList<Venda>();
 		try {
@@ -89,7 +89,7 @@ public class VendaDAO {
 		}
 		return lista;
 	}
-	
+
 	public Venda getVenda(int id) throws SQLException {
 		String sql = "SELECT * FROM venda WHERE id = ?";
 		try {
@@ -150,22 +150,29 @@ public class VendaDAO {
 		return false;
 	}
 
-	public boolean novoVenda(Venda venda) throws SQLException {
+	public Integer novoVenda(Venda venda) throws SQLException {
 		String sql = "INSERT INTO venda (id_cliente, data, valortotal) VALUES (?,?,?)";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, venda.getIdCliente());
 			stmt.setDate(2, new Date(venda.getData().getTime()));
 			stmt.setDouble(3, venda.getValorTotal());
-			System.out.println(stmt.toString());
-			stmt.execute();
-			return true;
+
+			int linhasAfetadas = stmt.executeUpdate();
+			if(linhasAfetadas == 0){
+				throw new SQLException("Inserção de venda falhou, não houve linhas afetadas");
+			}
+			
+			ResultSet rs = stmt.getGeneratedKeys();
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			this.connection.close();
 		}
 
-		return false;
+		return null;
 	}
 }

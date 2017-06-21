@@ -21,11 +21,8 @@
 			<input type="text" readonly="readonly" name="id" class="form-control" id="id" value="${venda.getId()}">
 		</div>
 		<div class="form-group">
-			<label for="bairro">Cliente</label>
-			<select name="idCliente" class="form-control" id="bairro">
-				<c:if test="${param.acao eq 'novo'}">
-					<option value="">-- Selecionar Cliente --</option>
-				</c:if>
+			<label for="cliente">Cliente</label>
+			<select name="idCliente" class="form-control" id="cliente">
 				<c:forEach var="cliente" items="${listaClientesCombo}">
 					<option value="${cliente.getId()}" ${venda.getIdCliente() == cliente.getId() ? 'selected="selected"' : ''}>${cliente.getNome()}</option>
 				</c:forEach>
