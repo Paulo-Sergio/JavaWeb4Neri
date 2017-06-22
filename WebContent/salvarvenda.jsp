@@ -45,13 +45,11 @@
 	
 	<h1 class="page-header" style="margin-top: 50px">Mercadorias da Venda</h1>
 	
-	<form method="POST" action="VendaServlet?acao=${param.acao}">
-		<c:if test="${param.acao eq 'alterar'}">
-			<input type="hidden" readonly="readonly" name="id" class="form-control" id="id" value="${idDaVenda}">
-		</c:if>
+	<form method="POST" action="VendaServlet?acao=novoItemVenda">
+		<input type="hidden" readonly="readonly" name="idVenda" class="form-control" id="idVenda" value="${venda.getId()}">
 		<div class="form-group">
-			<label for="bairro">Produto</label>
-			<select name="idCliente" class="form-control" id="bairro">
+			<label for="idProduto">Produto</label>
+			<select name="idProduto" class="form-control" id="idProduto">
 				<c:if test="${param.acao eq 'novo'}">
 					<option value="">-- Selecionar Produto --</option>
 				</c:if>
@@ -61,8 +59,8 @@
 			</select>
 		</div>
 		<div class="form-group">
-			<label for="qtdEstoque">Quantidade</label> 
-			<input type="number" name="qtdEstoque" class="form-control" id="qtdEstoque">
+			<label for="quantidade">Quantidade</label> 
+			<input type="number" name="quantidade" class="form-control" id="quantidade">
 		</div>
 		<div class="form-group">
 			<a href="VendaServlet" class="btn btn-default">Voltar</a>

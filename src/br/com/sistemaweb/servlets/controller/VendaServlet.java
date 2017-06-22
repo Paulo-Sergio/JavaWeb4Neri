@@ -16,9 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.sistemaweb.dao.ClienteDAO;
+import br.com.sistemaweb.dao.ItensVendaDAO;
 import br.com.sistemaweb.dao.ProdutoDAO;
 import br.com.sistemaweb.dao.VendaDAO;
 import br.com.sistemaweb.javabean.model.Cliente;
+import br.com.sistemaweb.javabean.model.ItensVenda;
 import br.com.sistemaweb.javabean.model.Produto;
 import br.com.sistemaweb.javabean.model.Venda;
 
@@ -31,6 +33,9 @@ public class VendaServlet extends HttpServlet {
 
 	public void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException, ParseException {
+		/**
+		 * PARAMETROS DA VENDA
+		 */
 		String id = request.getParameter("id");
 		String idCliente = request.getParameter("idCliente");
 		String data = request.getParameter("data");
@@ -51,6 +56,28 @@ public class VendaServlet extends HttpServlet {
 			venda.setValorTotal(Double.parseDouble(valorTotal));
 
 		VendaDAO vendaDAO = new VendaDAO();
+
+		/**
+		 * PARAMETROS DO ITENS_VENDA
+		 */
+		String idProduto = request.getParameter("idProduto");
+		String idVenda = request.getParameter("idVenda");
+		String quantidade = request.getParameter("quantidade");
+		String total = request.getParameter("total");
+
+		ItensVenda itensVenda = new ItensVenda();
+		if (idProduto != null)
+			itensVenda.setIdProduto(Integer.parseInt(idProduto));
+		if (idVenda != null && !idVenda.isEmpty())
+			itensVenda.setIdVenda(Integer.parseInt(idVenda));
+		if (quantidade != null)
+			itensVenda.setQuantidade(Integer.parseInt(quantidade));
+		if (total != null)
+			itensVenda.setTotal(Double.parseDouble(total));
+
+		ItensVendaDAO itensVendaDAO = new ItensVendaDAO();
+		
+		Integer idVendaInserida = null;
 
 		RequestDispatcher dispatcher = null;
 
@@ -104,12 +131,17 @@ public class VendaServlet extends HttpServlet {
 				dispatcher = request.getRequestDispatcher("salvarvenda.jsp");
 
 			} else if (request.getMethod().equals("POST")) {
-				Integer idVenda = vendaDAO.novoVenda(venda);
-				if (idVenda != null) {
-					venda.setId(idVenda);
+				idVendaInserida = vendaDAO.novoVenda(venda);
+				if (idVendaInserida != null) {
+					venda.setId(idVendaInserida);
 					request.setAttribute("venda", venda);
 					dispatcher = request.getRequestDispatcher("salvarvenda.jsp");
 				}
+			}
+		} else if (acao.equals("novoItemVenda")) {
+			if (itensVendaDAO.novoVenda(itensVenda)) {
+				request.setAttribute("idVenda", idVendaInserida);
+				dispatcher = request.getRequestDispatcher("salvarvenda.jsp");
 			}
 		}
 
