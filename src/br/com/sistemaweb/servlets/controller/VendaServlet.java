@@ -31,6 +31,8 @@ import br.com.sistemaweb.javabean.model.Venda;
 public class VendaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	Venda vendaClone = null;
+
 	public void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException, ParseException {
 		/**
@@ -55,8 +57,6 @@ public class VendaServlet extends HttpServlet {
 		if (valorTotal != null)
 			venda.setValorTotal(Double.parseDouble(valorTotal));
 
-		VendaDAO vendaDAO = new VendaDAO();
-
 		/**
 		 * PARAMETROS DO ITENS_VENDA
 		 */
@@ -74,10 +74,6 @@ public class VendaServlet extends HttpServlet {
 			itensVenda.setQuantidade(Integer.parseInt(quantidade));
 		if (total != null)
 			itensVenda.setTotal(Double.parseDouble(total));
-
-		ItensVendaDAO itensVendaDAO = new ItensVendaDAO();
-		
-		Integer idVendaInserida = null;
 
 		RequestDispatcher dispatcher = null;
 
@@ -97,15 +93,15 @@ public class VendaServlet extends HttpServlet {
 			String pesquisa = pPesquisa == null ? "" : pPesquisa;
 			String campoPesquisa = pCampoPesquisa == null || pCampoPesquisa == "" ? "descricao" : pCampoPesquisa;
 
-			List<Venda> listaVendas = new VendaDAO().getListaVendasPaginada(Integer.parseInt(numPagina), ordenacao, pesquisa,
-					campoPesquisa);
+			List<Venda> listaVendas = new VendaDAO().getListaVendasPaginada(Integer.parseInt(numPagina), ordenacao,
+					pesquisa, campoPesquisa);
 			int qtdTotalRegistros = new VendaDAO().totalDeRegistros(pesquisa, campoPesquisa);
 			request.setAttribute("listaVendas", listaVendas);
 			request.setAttribute("qtdTotalRegistros", qtdTotalRegistros);
 			dispatcher = request.getRequestDispatcher("/listavendas.jsp");
 
 		} else if (acao.equals("excluir")) {
-			if (vendaDAO.excluirVenda(venda)) {
+			if (new VendaDAO().excluirVenda(venda)) {
 				request.setAttribute("mensagemExclusao", "Venda " + id + " excluido com sucesso!");
 				response.sendRedirect("VendaServlet");
 			}
@@ -119,7 +115,7 @@ public class VendaServlet extends HttpServlet {
 				dispatcher = request.getRequestDispatcher("salvarvenda.jsp");
 
 			} else if (request.getMethod().equals("POST")) {
-				if (vendaDAO.alterarVenda(venda)) {
+				if (new VendaDAO().alterarVenda(venda)) {
 					request.setAttribute("mensagemAlteracao", "Venda alterada com sucesso");
 					response.sendRedirect("VendaServlet");
 				}
@@ -128,25 +124,40 @@ public class VendaServlet extends HttpServlet {
 		} else if (acao.equals("novo")) {
 			preencherComboBox(request);
 			if (request.getMethod().equals("GET")) {
-				dispatcher = request.getRequestDispatcher("salvarvenda.jsp");
+				dispatcher = request.getRequestDispatcher("/salvarvenda.jsp");
 
 			} else if (request.getMethod().equals("POST")) {
-				idVendaInserida = vendaDAO.novoVenda(venda);
+				Integer idVendaInserida = new VendaDAO().novoVenda(venda);
 				if (idVendaInserida != null) {
 					venda.setId(idVendaInserida);
+					if (this.vendaClone == null) {
+						vendaCloneParaAddItens(venda);
+					}
 					request.setAttribute("venda", venda);
-					dispatcher = request.getRequestDispatcher("salvarvenda.jsp");
+					dispatcher = request.getRequestDispatcher("/salvarvenda.jsp");
 				}
 			}
 		} else if (acao.equals("novoItemVenda")) {
-			if (itensVendaDAO.novoVenda(itensVenda)) {
-				request.setAttribute("idVenda", idVendaInserida);
-				dispatcher = request.getRequestDispatcher("salvarvenda.jsp");
+			if (new ItensVendaDAO().novoVenda(itensVenda)) {
+				preencherComboBox(request);
+				List<ItensVenda> listaItensDaVenda = new ItensVendaDAO().getListaItensDaVenda(this.vendaClone.getId());
+				
+				request.setAttribute("venda", this.vendaClone);
+				request.setAttribute("listaItensDaVenda", listaItensDaVenda);
+				dispatcher = request.getRequestDispatcher("/salvarvenda.jsp");
 			}
 		}
 
 		if (dispatcher != null)
 			dispatcher.forward(request, response);
+	}
+
+	private void vendaCloneParaAddItens(Venda venda) {
+		try {
+			this.vendaClone = venda.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void preencherComboBox(HttpServletRequest request) throws SQLException {
@@ -157,7 +168,8 @@ public class VendaServlet extends HttpServlet {
 		request.setAttribute("listaProdutosCombo", listaProdutosCombo);
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			processRequest(request, response);
 		} catch (SQLException e) {
@@ -167,7 +179,8 @@ public class VendaServlet extends HttpServlet {
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			processRequest(request, response);
 		} catch (SQLException e) {

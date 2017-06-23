@@ -2,7 +2,7 @@ package br.com.sistemaweb.javabean.model;
 
 import java.util.Date;
 
-public class Venda {
+public class Venda implements Cloneable{
 
 	private int id;
 	private int idCliente;
@@ -33,4 +33,9 @@ public class Venda {
 	public void setValorTotal(double valorTotal) {
 		this.valorTotal = valorTotal;
 	}
+	
+	@Override
+    public Venda clone() throws CloneNotSupportedException {
+        return (Venda) super.clone();
+    }
 }

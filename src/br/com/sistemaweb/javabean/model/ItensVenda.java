@@ -7,6 +7,9 @@ public class ItensVenda {
 	private int quantidade;
 	private double total;
 	
+	private String produtoDescricao;
+	private Double precoUnitario;
+	
 	public int getIdProduto() {
 		return idProduto;
 	}
@@ -30,5 +33,17 @@ public class ItensVenda {
 	}
 	public void setTotal(double total) {
 		this.total = total;
+	}
+	public String getProdutoDescricao() {
+		return produtoDescricao;
+	}
+	public void setProdutoDescricao(String produtoDescricao) {
+		this.produtoDescricao = produtoDescricao;
+	}
+	public Double getPrecoUnitario() {
+		return precoUnitario;
+	}
+	public void setPrecoUnitario(Double precoUnitario) {
+		this.precoUnitario = precoUnitario;
 	}
 }
