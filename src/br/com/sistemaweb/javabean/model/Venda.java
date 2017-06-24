@@ -9,6 +9,8 @@ public class Venda implements Cloneable{
 	private Date data;
 	private double valorTotal;
 	
+	private String clienteNome;
+	
 	public int getId() {
 		return id;
 	}
@@ -33,9 +35,17 @@ public class Venda implements Cloneable{
 	public void setValorTotal(double valorTotal) {
 		this.valorTotal = valorTotal;
 	}
+	public String getClienteNome() {
+		return clienteNome;
+	}
+	public void setClienteNome(String clienteNome) {
+		this.clienteNome = clienteNome;
+	}
 	
 	@Override
     public Venda clone() throws CloneNotSupportedException {
         return (Venda) super.clone();
     }
+	
+	
 }

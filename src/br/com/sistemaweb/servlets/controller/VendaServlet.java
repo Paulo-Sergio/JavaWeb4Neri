@@ -41,7 +41,7 @@ public class VendaServlet extends HttpServlet {
 		String id = request.getParameter("id");
 		String idCliente = request.getParameter("idCliente");
 		String data = request.getParameter("data");
-		String valorTotal = request.getParameter("valorTotal");
+		// String valorTotal = request.getParameter("valorTotal");
 
 		Venda venda = new Venda();
 		if (id != null && id != "")
@@ -54,8 +54,8 @@ public class VendaServlet extends HttpServlet {
 			Date dtData = formatoData.parse(data);
 			venda.setData(dtData);
 		}
-		if (valorTotal != null)
-			venda.setValorTotal(Double.parseDouble(valorTotal));
+		// if (valorTotal != null)
+		// venda.setValorTotal(Double.parseDouble(valorTotal));
 
 		/**
 		 * PARAMETROS DO ITENS_VENDA
@@ -125,6 +125,7 @@ public class VendaServlet extends HttpServlet {
 			preencherComboBox(request);
 			if (request.getMethod().equals("GET")) {
 				dispatcher = request.getRequestDispatcher("/salvarvenda.jsp");
+				this.vendaClone = null;
 
 			} else if (request.getMethod().equals("POST")) {
 				Integer idVendaInserida = new VendaDAO().novoVenda(venda);
@@ -141,7 +142,7 @@ public class VendaServlet extends HttpServlet {
 			if (new ItensVendaDAO().novoVenda(itensVenda)) {
 				preencherComboBox(request);
 				List<ItensVenda> listaItensDaVenda = new ItensVendaDAO().getListaItensDaVenda(this.vendaClone.getId());
-				
+
 				request.setAttribute("venda", this.vendaClone);
 				request.setAttribute("listaItensDaVenda", listaItensDaVenda);
 				dispatcher = request.getRequestDispatcher("/salvarvenda.jsp");

@@ -25,6 +25,9 @@
 		<div class="form-group">
 			<label for="cliente">Cliente</label>
 			<select name="idCliente" class="form-control" id="cliente">
+				<c:if test="${param.acao eq 'novo'}">
+					<option value="">-- Selecionar Cliente --</option>
+				</c:if>
 				<c:forEach var="cliente" items="${listaClientesCombo}">
 					<option value="${cliente.getId()}" ${venda.getIdCliente() == cliente.getId() ? 'selected="selected"' : ''}>${cliente.getNome()}</option>
 				</c:forEach>
@@ -78,7 +81,7 @@
 				<th>Valor Total</th>
 				<th width="32">Excluir</th>
 			</tr>
-			<c:forEach var="item" items="${listaItensDaVenda}">
+			<c:forEach var="item" items="${listaVendas}">
 				<tr>
 					<td>${item.getIdVenda()}</td>
 					<td>${item.getIdProduto()}</td>
@@ -92,11 +95,10 @@
 						</a>
 					</td>
 				</tr>
-				<c:set var="valorTotalDaVenda" value="${valorTotalDaVenda += item.getPrecoUnitario() * item.getQuantidade()}" />
+				<c:set var="valorTotalDaVenda" value="${valorTotalDaVenda + item.getPrecoUnitario() * item.getQuantidade()}" />
 			</c:forEach>
 			<tr>
-				<td colspan="6" class="text-right">Valor total desta venda: </td>
-				<td>R$ {valorTotalDaVenda}</td>
+				<td colspan="7" class="text-right"><h3>Valor total desta venda: R$ ${valorTotalDaVenda}</h3></td>
 			</tr>
 		</table>
 	</c:if>

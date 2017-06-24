@@ -21,7 +21,7 @@ public class VendaDAO {
 	}
 
 	public int totalDeRegistros(String pesquisa, String campoPesquisa) throws SQLException {
-		String sql = "SELECT count(*) AS contaRegistros FROM venda WHERE " + campoPesquisa + " LIKE '%" + pesquisa + "%'";
+		String sql = "SELECT count(*) AS contaRegistros FROM venda ";
 		int totalRegistros = 0;
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -42,8 +42,11 @@ public class VendaDAO {
 			throws SQLException {
 		int limit = 10;
 		int offset = (limit * pagina) - limit;
-		String sql = "SELECT * FROM venda WHERE " + campoPesquisa + " LIKE '%" + pesquisa + "%' ORDER BY " + ordenacao
-				+ " LIMIT 10 OFFSET " + offset;
+		String sql = "SELECT * FROM venda "
+				+ "INNER JOIN cliente ON cliente.id = venda.id_cliente "
+				+ "INNER JOIN itens_venda ON itens_venda.id_venda = venda.id "
+				+ "INNER JOIN produtos ON produtos.id = itens_venda.id_produto "
+				+ "GROUP BY venda.id";
 		List<Venda> lista = new ArrayList<Venda>();
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -55,6 +58,8 @@ public class VendaDAO {
 				venda.setIdCliente(rs.getInt("id_cliente"));
 				venda.setData(rs.getDate("data"));
 				venda.setValorTotal(rs.getDouble("valortotal"));
+				venda.setClienteNome(rs.getString("nome"));
+				venda.setProdutoDescricao(rs.getString("descricao"));
 				lista.add(venda);
 			}
 
