@@ -44,8 +44,6 @@ public class VendaDAO {
 		int offset = (limit * pagina) - limit;
 		String sql = "SELECT * FROM venda "
 				+ "INNER JOIN cliente ON cliente.id = venda.id_cliente "
-				+ "INNER JOIN itens_venda ON itens_venda.id_venda = venda.id "
-				+ "INNER JOIN produtos ON produtos.id = itens_venda.id_produto "
 				+ "GROUP BY venda.id";
 		List<Venda> lista = new ArrayList<Venda>();
 		try {
@@ -59,7 +57,6 @@ public class VendaDAO {
 				venda.setData(rs.getDate("data"));
 				venda.setValorTotal(rs.getDouble("valortotal"));
 				venda.setClienteNome(rs.getString("nome"));
-				venda.setProdutoDescricao(rs.getString("descricao"));
 				lista.add(venda);
 			}
 
