@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `javaweb4neri` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `javaweb4neri`;
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: javaweb4neri
 -- ------------------------------------------------------
--- Server version	5.7.14
+-- Server version	5.7.11
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -162,7 +162,7 @@ CREATE TABLE `itens_venda` (
 
 LOCK TABLES `itens_venda` WRITE;
 /*!40000 ALTER TABLE `itens_venda` DISABLE KEYS */;
-INSERT INTO `itens_venda` VALUES (1,14,1,NULL),(2,15,1,NULL);
+INSERT INTO `itens_venda` VALUES (1,40,1,NULL),(1,41,2,NULL),(1,46,1,NULL),(1,47,1,NULL),(2,40,1,NULL),(2,43,1,NULL),(2,44,1,NULL),(2,45,1,NULL),(2,47,2,NULL),(3,40,1,NULL),(3,42,1,NULL),(3,43,2,NULL),(3,45,1,NULL);
 /*!40000 ALTER TABLE `itens_venda` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,11 +206,10 @@ CREATE TABLE `produtos` (
   `perclucro` int(11) DEFAULT NULL,
   `precovenda` decimal(8,2) NOT NULL,
   `datacadastro` date DEFAULT NULL,
-  `datavenda` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_produtos_categoria1_idx` (`id_categoria`),
   CONSTRAINT `fk_produtos_categoria1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,7 +218,7 @@ CREATE TABLE `produtos` (
 
 LOCK TABLES `produtos` WRITE;
 /*!40000 ALTER TABLE `produtos` DISABLE KEYS */;
-INSERT INTO `produtos` VALUES (1,1,'Curso Java Básico',10,80.00,30,104.00,'2014-05-30','2017-05-03'),(2,2,'Curso Android I',20,50.00,40,70.00,'2014-04-30',NULL);
+INSERT INTO `produtos` VALUES (1,1,'Curso Java Básico',10,80.00,30,104.00,'2014-05-30'),(2,2,'Curso Android I',20,50.00,40,70.00,'2014-04-30'),(3,2,'Curso PHP',10,40.00,35,65.00,'2015-12-15');
 /*!40000 ALTER TABLE `produtos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -264,7 +263,7 @@ CREATE TABLE `venda` (
   PRIMARY KEY (`id`),
   KEY `fk_venda_cliente1_idx` (`id_cliente`),
   CONSTRAINT `fk_venda_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -273,13 +272,9 @@ CREATE TABLE `venda` (
 
 LOCK TABLES `venda` WRITE;
 /*!40000 ALTER TABLE `venda` DISABLE KEYS */;
-INSERT INTO `venda` VALUES (11,3,'2017-06-21',456.78),(12,4,'2017-06-21',123.78),(13,1,'2017-06-21',456.78),(14,1,'5329-08-14',4564.00),(15,3,'5683-05-15',1564.00);
+INSERT INTO `venda` VALUES (40,1,'2017-06-23',0.00),(41,3,'2017-06-12',0.00),(42,9,'2017-06-23',0.00),(43,5,'2017-06-23',0.00),(44,1,'2017-06-12',0.00),(45,1,'2017-06-23',0.00),(46,9,'2017-06-23',0.00),(47,5,'2017-06-23',0.00);
 /*!40000 ALTER TABLE `venda` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping routines for database 'javaweb4neri'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -290,4 +285,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-22 16:33:57
+-- Dump completed on 2017-06-23 22:22:28
